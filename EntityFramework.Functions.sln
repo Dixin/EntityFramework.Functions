@@ -33,6 +33,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuproj", "Nuproj", "{2BCEAC57-4685-4DCA-A316-79CA877B6D62}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\NuProj\Microsoft.Web.XmlTransform.dll = Tools\NuProj\Microsoft.Web.XmlTransform.dll
+		Tools\NuProj\NuGet.Core.dll = Tools\NuProj\NuGet.Core.dll
+		Tools\NuProj\NuGet.exe = Tools\NuProj\NuGet.exe
+		Tools\NuProj\NuProj.props = Tools\NuProj\NuProj.props
+		Tools\NuProj\NuProj.targets = Tools\NuProj\NuProj.targets
+		Tools\NuProj\NuProj.Tasks.dll = Tools\NuProj\NuProj.Tasks.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rules", "Rules", "{703B25E4-91A3-444A-A499-C69A3B8A8DC0}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\NuProj\Rules\content.xaml = Tools\NuProj\Rules\content.xaml
+		Tools\NuProj\Rules\folder.xaml = Tools\NuProj\Rules\folder.xaml
+		Tools\NuProj\Rules\general.browseobject.xaml = Tools\NuProj\Rules\general.browseobject.xaml
+		Tools\NuProj\Rules\general.xaml = Tools\NuProj\Rules\general.xaml
+		Tools\NuProj\Rules\none.xaml = Tools\NuProj\Rules\none.xaml
+		Tools\NuProj\Rules\ProjectItemsSchema.xaml = Tools\NuProj\Rules\ProjectItemsSchema.xaml
+		Tools\NuProj\Rules\ProjectReference.xaml = Tools\NuProj\Rules\ProjectReference.xaml
+		Tools\NuProj\Rules\ResolvedProjectReference.xaml = Tools\NuProj\Rules\ResolvedProjectReference.xaml
+		Tools\NuProj\Rules\scc.xaml = Tools\NuProj\Rules\scc.xaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,5 +85,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2BCEAC57-4685-4DCA-A316-79CA877B6D62} = {2DF3286B-B7B1-4625-8D38-880166D22705}
+		{703B25E4-91A3-444A-A499-C69A3B8A8DC0} = {2BCEAC57-4685-4DCA-A316-79CA877B6D62}
 	EndGlobalSection
 EndGlobal
