@@ -1,4 +1,4 @@
-<p>EntityFramework.Functions library implements <a href="https://en.wikipedia.org/wiki/Entity_Framework" target="_blank">Entity Framework</a> code first support for:</p>
+<h1>EntityFramework.Functions</h1><p>EntityFramework.Functions library implements <a href="https://en.wikipedia.org/wiki/Entity_Framework" target="_blank">Entity Framework</a> code first support for:</p>
 <ul>
     <li>
         Stored procedures, with:
