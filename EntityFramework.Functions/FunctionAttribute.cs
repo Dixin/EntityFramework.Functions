@@ -23,12 +23,38 @@
 
     // <Function Name="uspGetManagerEmployees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [AttributeUsage(AttributeTargets.Method)]
-    public abstract class FunctionAttribute : DbFunctionAttribute
+    public class FunctionAttribute : DbFunctionAttribute
     {
-        protected FunctionAttribute(FunctionType type, string name, string namespaceName)
-            : base(namespaceName, name) // DbFunctionAttribute has FunctionName property.
+        /// <summary>
+        /// Identifies a function which is mapped to a store-defined function.
+        /// </summary>
+        /// <param name="type">The type of the fuction.</param>
+        /// <param name="name">The name of the function.</param>
+        /// <param name="namespaceName">
+        /// Required for Table Valued Functions, where it should be the same as the name of the DbContext.
+        /// Do not provide for other function types.
+        /// </param>
+        public FunctionAttribute(FunctionType type, string name, string namespaceName = Function.CodeFirstDatabaseSchema)
+            : base(namespaceName, name)
         {
             this.Type = type;
+
+            switch (type)
+            {
+                case FunctionType.TableValuedFunction:
+                    if (namespaceName == Function.CodeFirstDatabaseSchema)
+                    {
+                        throw new ArgumentException("For Table Valued Functions the namespaceName parameter must be set.");
+                    }
+                    break;
+                default:
+                    if (namespaceName != Function.CodeFirstDatabaseSchema)
+                    {
+                        throw new ArgumentException("The namespaceName parameter may only be set for Table Valued Functions.");
+                    }
+                    break;
+            }
+
             switch (type)
             {
                 case FunctionType.StoredProcedure:
