@@ -60,6 +60,20 @@
         }
 
         [TestMethod]
+        public void CallComposedTableValuedFunction()
+        {
+            using (AdventureWorks database = new AdventureWorks())
+            {
+                var employeesWithContactInformation = from employee in database.People
+                                                      from contactInfo in database.ufnGetContactInformation(employee.BusinessEntityID)
+                                                      select new { employee.FirstName, contactInfo.JobTitle }
+                                                      ;
+                var employeeWithContactInformation = employeesWithContactInformation.Take(1).ToList();
+                Assert.AreEqual(employeeWithContactInformation.Count, 1);
+            }
+        }
+
+        [TestMethod]
         public void CallNonComposableScalarValuedFunction()
         {
             using (AdventureWorks database = new AdventureWorks())
@@ -132,10 +146,10 @@
                     .ToArray();
                 Assert.IsTrue(categories.Length > 0);
                 categories.ForEach(category =>
-                    {
-                        Assert.IsTrue(category.CategoryId > 0);
-                        Assert.IsFalse(string.IsNullOrWhiteSpace(category.SubcategoryNames));
-                    });
+                {
+                    Assert.IsTrue(category.CategoryId > 0);
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(category.SubcategoryNames));
+                });
             }
         }
 
