@@ -23,11 +23,10 @@
 
     // <Function Name="uspGetManagerEmployees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [AttributeUsage(AttributeTargets.Method)]
-    public class FunctionAttribute : DbFunctionAttribute
+    public abstract class FunctionAttribute : DbFunctionAttribute
     {
-
-        public FunctionAttribute(FunctionType type, string name)
-            : base(Function.CodeFirstDatabaseSchema, name) // DbFunctionAttribute has FunctionName property.
+        protected FunctionAttribute(FunctionType type, string name, string namespaceName)
+            : base(namespaceName, name) // DbFunctionAttribute has FunctionName property.
         {
             this.Type = type;
             switch (type)
@@ -85,6 +84,46 @@
 
         public ParameterTypeSemantics ParameterTypeSemantics { get; set; } = ParameterTypeSemantics.AllowImplicitConversion;
     }
+
+    public class StoredProcedureAttribute : FunctionAttribute
+    {
+        public StoredProcedureAttribute(string name) : base(FunctionType.StoredProcedure, name, Function.CodeFirstDatabaseSchema) { }
+    }
+
+    public class NonComposableScalarValuedFunctionAttribute : FunctionAttribute
+    {
+        public NonComposableScalarValuedFunctionAttribute(string name) : base(FunctionType.NonComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema) { }
+    }
+    public class ComposableScalarValuedFunctionAttribute : FunctionAttribute
+    {
+        public ComposableScalarValuedFunctionAttribute(string name) : base(FunctionType.ComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema) { }
+    }
+
+    public class TableValuedFunctionAttribute : FunctionAttribute
+    {
+        /// <summary>
+        /// Marks a function as mapped to a Table Valued Function.
+        /// </summary>
+        /// <param name="name">The name of the Table Valued Function in the data store.</param>
+        /// <param name="namespaceName">The name of the <see cref="DbContext"/> class.</param>
+        public TableValuedFunctionAttribute(string name, string namespaceName) : base(FunctionType.TableValuedFunction, name, namespaceName) { }
+    }
+
+    public class AggregateFunctionAttribute : FunctionAttribute
+    {
+        public AggregateFunctionAttribute(string name) : base(FunctionType.AggregateFunction, name, Function.CodeFirstDatabaseSchema) { }
+    }
+
+    public class BuiltInFunctionAttribute : FunctionAttribute
+    {
+        public BuiltInFunctionAttribute(string name) : base(FunctionType.BuiltInFunction, name, Function.CodeFirstDatabaseSchema) { }
+    }
+
+    public class NiladicFunctionAttribute : FunctionAttribute
+    {
+        public NiladicFunctionAttribute(string name) : base(FunctionType.NiladicFunction, name, Function.CodeFirstDatabaseSchema) { }
+    }
+
 
     // System.Data.Linq.Mapping.ParameterAttribute
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
