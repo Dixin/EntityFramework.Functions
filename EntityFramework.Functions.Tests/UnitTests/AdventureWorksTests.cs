@@ -156,7 +156,7 @@
         }
 
         [TestMethod]
-        public void BuitInFunctionLinqTest()
+        public void BuiltInFunctionLinqTest()
         {
             using (AdventureWorks adventureWorks = new AdventureWorks())
             {
