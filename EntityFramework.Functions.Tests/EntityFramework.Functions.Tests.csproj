@@ -66,7 +66,7 @@
   <ItemGroup>
     <Compile Include="Examples\AdventureWorks.AggregateFunctions.cs" />
     <Compile Include="Examples\AdventureWorks.ComplexTypes.cs" />
-    <Compile Include="Examples\AdventureWorks.cs" />
+    <Compile Include="Examples\AdventureWorks.Database.cs" />
     <Compile Include="Examples\AdventureWorks.Functions.cs" />
     <Compile Include="Examples\AdventureWorks.Tables.cs" />
     <Compile Include="UnitTests\AdventureWorksTests.cs" />
@@ -93,6 +93,9 @@
       <Project>{1f4a3422-908a-4ea0-98d8-b3ad8f402faf}</Project>
       <Name>EntityFramework.Functions.Net46</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UnitTests\AdventureWorks.sql" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
