@@ -35,7 +35,7 @@
 - Scalar-valued functions (composable or non-composable), 
 - Aggregate functions, 
 - Built-in functions, 
-- Niladic function.
+- Niladic functions.
 
 EntityFramework.Functions library works on .NET 4.0, .NET 4.5, .NET 4.6, with Entity Framework 6.1.0 and later.
 
