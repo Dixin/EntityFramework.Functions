@@ -69,6 +69,7 @@
     <Compile Include="Examples\AdventureWorks.Database.cs" />
     <Compile Include="Examples\AdventureWorks.Functions.cs" />
     <Compile Include="Examples\AdventureWorks.Tables.cs" />
+    <Compile Include="Examples\ModelDefinedFunctions.cs" />
     <Compile Include="UnitTests\AdventureWorksTests.cs" />
     <Compile Include="Examples\BuiltInFunctions.cs" />
     <Compile Include="Examples\NiladicFunctions.cs" />

@@ -58,7 +58,13 @@ namespace EntityFramework.Functions
                 throw new ArgumentNullException(nameof(functionAttribute));
             }
 
-            /*
+			if (functionAttribute.Type == FunctionType.ModelDefinedFunction)
+			{
+				AddModelDefinedFunction(model, methodInfo, (ModelDefinedFunctionAttribute)functionAttribute);
+				return;
+			}
+
+			/*
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="CodeFirstDatabaseSchema" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
@@ -98,8 +104,8 @@ namespace EntityFramework.Functions
       </Schema>
     </edmx:StorageModels>
             */
-            // Build above <StorageModels> imperatively.
-            string functionName = functionAttribute.FunctionName;
+			// Build above <StorageModels> imperatively.
+			string functionName = functionAttribute.FunctionName;
             if (string.IsNullOrWhiteSpace(functionName))
             {
                 functionName = methodInfo.Name;
@@ -119,7 +125,8 @@ namespace EntityFramework.Functions
                     ParameterTypeSemantics = functionAttribute.ParameterTypeSemantics,
                     Parameters = model.GetStoreParameters(methodInfo, functionAttribute),
                     ReturnParameters = model.GetStoreReturnParameters(methodInfo, functionAttribute),
-                    CommandText = methodInfo.GetStoreCommandText(functionAttribute, functionName)
+                    CommandText = methodInfo.GetStoreCommandText(functionAttribute, functionName),
+                    
                 },
                 null);
             model.StoreModel.AddItem(storeFunction);
@@ -131,6 +138,7 @@ namespace EntityFramework.Functions
                 case FunctionType.AggregateFunction:
                 case FunctionType.BuiltInFunction:
                 case FunctionType.NiladicFunction:
+                case FunctionType.ModelDefinedFunction:
                     return;
             }
 
@@ -236,7 +244,48 @@ namespace EntityFramework.Functions
             model.ConceptualToStoreMapping.AddFunctionImportMapping(mapping);
         }
 
-        private static IList<FunctionParameter> GetStoreParameters
+		private static void AddModelDefinedFunction(DbModel model, MethodInfo methodInfo, ModelDefinedFunctionAttribute functionAttribute)
+		{
+			/*
+			<!-- CSDL content -->
+			<edmx:ConceptualModels>
+				<Schema Namespace="AdventureWorks" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+					<Function Name="HasMiddleName" ReturnType="Edm.Boolean>
+						<Parameter Name="person" Type="AdventureWorks.Person" />
+						<DefiningExpression>
+							person.MiddleName IS NOT NULL
+						</DefiningExpression>
+					</Function>
+				</Schema>
+			</edmx:ConceptualModels>
+			*/
+			// Build above <ConceptualModels> imperatively.
+
+			var modelNamespaceName = model.ConceptualModel.EntityTypes.Select(e => e.NamespaceName).FirstOrDefault();
+			if (functionAttribute.NamespaceName != modelNamespaceName)
+			{
+				throw new InvalidOperationException($"The ModelDefinedFunctionAttribute for method {methodInfo.Name} must have namespaceName set to '{modelNamespaceName}'.");
+			}
+
+			EdmFunction modelFunction = EdmFunction.Create(
+				methodInfo.Name,
+				modelNamespaceName,
+				DataSpace.CSpace, // <edmx:ConceptualModels>
+				new EdmFunctionPayload
+				{
+					IsComposable = true,
+					Parameters = model.GetModelParametersForModelDefinedFunction(methodInfo),
+					ReturnParameters = model.GetModelReturnParameters(methodInfo, functionAttribute),
+					EntitySets = model.GetModelEntitySets(methodInfo, functionAttribute),
+					CommandText = functionAttribute.EntitySql,
+				},
+				null);
+			model.ConceptualModel.AddItem(modelFunction);
+		}
+
+
+
+		private static IList<FunctionParameter> GetStoreParameters
             (this DbModel model, MethodInfo methodInfo, FunctionAttribute functionAttribute) => methodInfo
                 .GetParameters()
                 .Select((parameterInfo, index) =>
@@ -482,7 +531,22 @@ namespace EntityFramework.Functions
                 .ToArray();
         }
 
-        private static IList<FunctionParameter> GetModelReturnParameters(
+	    private static IList<FunctionParameter> GetModelParametersForModelDefinedFunction(
+		    this DbModel model, MethodInfo methodInfo)
+	    {
+		    ParameterInfo[] parameters = methodInfo.GetParameters().ToArray();
+		    return parameters
+			    .Select((parameterInfo) =>
+			    {
+				    return FunctionParameter.Create(
+					    parameterInfo.GetCustomAttribute<ParameterAttribute>()?.Name ?? parameterInfo.Name,
+					    model.GetModelStructualType(parameterInfo.ParameterType, methodInfo),
+					    ParameterMode.In);
+			    })
+			    .ToArray();
+	    }
+
+	    private static IList<FunctionParameter> GetModelReturnParameters(
             this DbModel model, MethodInfo methodInfo, FunctionAttribute functionAttribute)
         {
             ParameterInfo returnParameterInfo = methodInfo.ReturnParameter;
@@ -539,10 +603,10 @@ namespace EntityFramework.Functions
                 }
             }
 
-            return modelReturnParameterEdmTypes
+			return modelReturnParameterEdmTypes
                 .Select((edmType, index) => FunctionParameter.Create(
                     $"ReturnType{index}",
-                    edmType.GetCollectionType(),
+					functionAttribute.Type == FunctionType.ModelDefinedFunction ? edmType : edmType.GetCollectionType(),
                     ParameterMode.ReturnValue))
                 .ToArray();
         }

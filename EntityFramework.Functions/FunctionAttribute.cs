@@ -18,7 +18,9 @@
 
         BuiltInFunction,
 
-        NiladicFunction
+        NiladicFunction,
+
+        ModelDefinedFunction,
     }
 
     // <Function Name="uspGetManagerEmployees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -44,7 +46,13 @@
                 case FunctionType.TableValuedFunction:
                     if (namespaceName == Function.CodeFirstDatabaseSchema)
                     {
-                        throw new ArgumentException("For Table Valued Functions the namespaceName parameter must be set.");
+                        throw new ArgumentException("For Table Valued Functions the namespaceName parameter must be set to the name of the DbContext class.");
+                    }
+					break;
+                case FunctionType.ModelDefinedFunction:
+                    if (namespaceName == Function.CodeFirstDatabaseSchema)
+                    {
+                        throw new ArgumentException("For Model Defined Functions the namespaceName parameter must be set to the namespace of the DbContext class.");
                     }
                     break;
                 default:
@@ -67,6 +75,7 @@
 
                 case FunctionType.TableValuedFunction:
                 case FunctionType.ComposableScalarValuedFunction:
+				case FunctionType.ModelDefinedFunction:
                     this.IsComposable = true;
                     this.IsAggregate = false;
                     this.IsBuiltIn = false;
@@ -133,6 +142,21 @@
         /// <param name="name">The name of the Table Valued Function in the data store.</param>
         /// <param name="namespaceName">The name of the <see cref="DbContext"/> class.</param>
         public TableValuedFunctionAttribute(string name, string namespaceName) : base(FunctionType.TableValuedFunction, name, namespaceName) { }
+    }
+    public class ModelDefinedFunctionAttribute : FunctionAttribute
+    {
+	    /// <summary>
+	    /// Marks a function as representing a Model Defined Function.
+	    /// </summary>
+	    /// <param name="name">The name of the method this attribute is applied to.</param>
+	    /// <param name="namespaceName">The namespace of the <see cref="DbContext"/> class.</param>
+	    /// <param name="entitySql">The EntitySQL implementation of the function.</param>
+	    public ModelDefinedFunctionAttribute(string name, string namespaceName, string entitySql) : base(FunctionType.ModelDefinedFunction, name, namespaceName)
+	    {
+		    EntitySql = entitySql;
+	    }
+
+		public string EntitySql { get; }
     }
 
     public class AggregateFunctionAttribute : FunctionAttribute

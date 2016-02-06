@@ -204,5 +204,26 @@
                 Assert.AreEqual("dbo", firstCategory.User, true, CultureInfo.InvariantCulture);
             }
         }
-    }
+
+		[TestMethod]
+		public void ModelDefinedFunctionInLinq()
+		{
+			using (AdventureWorks database = new AdventureWorks())
+			{
+				var employees = from employee in database.People
+								where employee.Title != null
+								let formatted = employee.FormatName()
+								select new
+								{
+									formatted,
+									employee
+								}
+													  ;
+				var employeeData = employees.Take(1).ToList().FirstOrDefault();
+				Assert.IsNotNull(employeeData);
+				Assert.IsNotNull(employeeData.formatted);
+				Assert.AreEqual(employeeData.employee.FormatName(), employeeData.formatted);
+			}
+		}
+	}
 }

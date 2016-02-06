@@ -86,10 +86,13 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BusinessEntityID { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(8)]
+        public string Title { get; set; }
+
+		[MaxLength(50)]
         public string FirstName { get; set; }
 
-        [MaxLength(50)]
+		[MaxLength(50)]
         public string LastName { get; set; }
     }
 }

@@ -17,6 +17,7 @@
             // Add functions to model.
             modelBuilder.AddFunctions<AdventureWorks>();
             modelBuilder.AddFunctions(typeof(AdventureWorksFunctions));
+            modelBuilder.AddFunctions(typeof(ModelDefinedFunctions));
             modelBuilder.AddFunctions(typeof(BuiltInFunctions));
             modelBuilder.AddFunctions(typeof(NiladicFunctions));
         }
