@@ -8,14 +8,17 @@
     public partial class AdventureWorks
     {
         public const string Production = nameof(Production);
+        public const string Person = nameof(Person);
 
         public DbSet<ProductCategory> ProductCategories { get; set; }
 
         public DbSet<ProductSubcategory> ProductSubcategories { get; set; }
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<Person> People { get; set; }
     }
-    
+
     [Table(nameof(ProductCategory), Schema = AdventureWorks.Production)]
     public partial class ProductCategory
     {
@@ -73,5 +76,20 @@
         public ProductSubcategory ProductSubcategory { get; set; }
 
         public int? ProductSubcategoryID { get; set; }
+    }
+
+
+    [Table(nameof(Person), Schema = AdventureWorks.Person)]
+    public partial class Person
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int BusinessEntityID { get; set; }
+
+        [MaxLength(50)]
+        public string FirstName { get; set; }
+
+        [MaxLength(50)]
+        public string LastName { get; set; }
     }
 }
