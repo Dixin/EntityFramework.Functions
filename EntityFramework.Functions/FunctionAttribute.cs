@@ -28,7 +28,7 @@
         /// <summary>
         /// Identifies a function which is mapped to a store-defined function.
         /// </summary>
-        /// <param name="type">The type of the fuction.</param>
+        /// <param name="type">The type of the function.</param>
         /// <param name="name">The name of the function.</param>
         /// <param name="namespaceName">
         /// Required for Table Valued Functions, where it should be the same as the name of the DbContext.
@@ -42,15 +42,16 @@
             switch (type)
             {
                 case FunctionType.TableValuedFunction:
-                    if (namespaceName == Function.CodeFirstDatabaseSchema)
+                    if (string.Equals(namespaceName, Function.CodeFirstDatabaseSchema, StringComparison.Ordinal))
                     {
-                        throw new ArgumentException("For Table Valued Functions the namespaceName parameter must be set.");
+                        throw new ArgumentException($"The {nameof(namespaceName)} parameter must be set for Table Valued Functions.");
                     }
                     break;
+
                 default:
-                    if (namespaceName != Function.CodeFirstDatabaseSchema)
+                    if (!string.Equals(namespaceName, Function.CodeFirstDatabaseSchema, StringComparison.Ordinal))
                     {
-                        throw new ArgumentException("The namespaceName parameter may only be set for Table Valued Functions.");
+                        throw new ArgumentException($"The {nameof(namespaceName)} parameter may only be set for Table Valued Functions.");
                     }
                     break;
             }
@@ -113,16 +114,25 @@
 
     public class StoredProcedureAttribute : FunctionAttribute
     {
-        public StoredProcedureAttribute(string name) : base(FunctionType.StoredProcedure, name, Function.CodeFirstDatabaseSchema) { }
+        public StoredProcedureAttribute(string name)
+            : base(FunctionType.StoredProcedure, name, Function.CodeFirstDatabaseSchema)
+        {
+        }
     }
 
     public class NonComposableScalarValuedFunctionAttribute : FunctionAttribute
     {
-        public NonComposableScalarValuedFunctionAttribute(string name) : base(FunctionType.NonComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public NonComposableScalarValuedFunctionAttribute(string name)
+            : base(FunctionType.NonComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema)
+        {
+        }
     }
     public class ComposableScalarValuedFunctionAttribute : FunctionAttribute
     {
-        public ComposableScalarValuedFunctionAttribute(string name) : base(FunctionType.ComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public ComposableScalarValuedFunctionAttribute(string name)
+            : base(FunctionType.ComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema)
+        {
+        }
     }
 
     public class TableValuedFunctionAttribute : FunctionAttribute
@@ -132,22 +142,34 @@
         /// </summary>
         /// <param name="name">The name of the Table Valued Function in the data store.</param>
         /// <param name="namespaceName">The name of the <see cref="DbContext"/> class.</param>
-        public TableValuedFunctionAttribute(string name, string namespaceName) : base(FunctionType.TableValuedFunction, name, namespaceName) { }
+        public TableValuedFunctionAttribute(string name, string namespaceName)
+            : base(FunctionType.TableValuedFunction, name, namespaceName)
+        {
+        }
     }
 
     public class AggregateFunctionAttribute : FunctionAttribute
     {
-        public AggregateFunctionAttribute(string name) : base(FunctionType.AggregateFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public AggregateFunctionAttribute(string name)
+            : base(FunctionType.AggregateFunction, name, Function.CodeFirstDatabaseSchema)
+        {
+        }
     }
 
     public class BuiltInFunctionAttribute : FunctionAttribute
     {
-        public BuiltInFunctionAttribute(string name) : base(FunctionType.BuiltInFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public BuiltInFunctionAttribute(string name)
+            : base(FunctionType.BuiltInFunction, name, Function.CodeFirstDatabaseSchema)
+        {
+        }
     }
 
     public class NiladicFunctionAttribute : FunctionAttribute
     {
-        public NiladicFunctionAttribute(string name) : base(FunctionType.NiladicFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public NiladicFunctionAttribute(string name)
+            : base(FunctionType.NiladicFunction, name, Function.CodeFirstDatabaseSchema)
+        {
+        }
     }
 
 

@@ -56,7 +56,7 @@
         }
 
         // Defines table-valued function, which must return IQueryable<T>.
-        [TableValuedFunction(nameof(ufnGetContactInformation), AdventureWorks.NameSpace, Schema = dbo)]
+        [TableValuedFunction(nameof(ufnGetContactInformation), NameSpace, Schema = dbo)]
         public IQueryable<ContactInformation> ufnGetContactInformation(
             [Parameter(DbType = "int", Name = "PersonID")]int? personId)
         {

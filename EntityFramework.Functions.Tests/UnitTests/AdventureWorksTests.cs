@@ -65,10 +65,10 @@
         {
             using (AdventureWorks database = new AdventureWorks())
             {
-                var employeesWithContactInformation = from employee in database.People
-                                                      from contactInfo in database.ufnGetContactInformation(employee.BusinessEntityID)
-                                                      select new { employee.FirstName, contactInfo.JobTitle }
-                                                      ;
+                var employeesWithContactInformation =
+                    from employee in database.People
+                    from contactInfo in database.ufnGetContactInformation(employee.BusinessEntityID)
+                    select new {employee.FirstName, contactInfo.JobTitle};
                 var employeeWithContactInformation = employeesWithContactInformation.Take(1).ToList();
                 Assert.AreEqual(employeeWithContactInformation.Count, 1);
             }
