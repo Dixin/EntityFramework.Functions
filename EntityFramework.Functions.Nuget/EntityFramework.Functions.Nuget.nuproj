@@ -24,7 +24,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>EntityFramework.Functions</Id>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <Title>EntityFramework Code First Functions</Title>
     <Authors>Dixin Yan</Authors>
     <Owners>Dixin Yan</Owners>
@@ -46,6 +46,8 @@ For more information, see:
 - Document (APIs and examples): https://weblogs.asp.net/Dixin/EntityFramework.Functions
 - Source code: https://github.com/Dixin/EntityFramework.Functions
 - Nuget package: https://www.nuget.org/packages/EntityFramework.Functions
+
+Thanks for the contribution of SteveRuble.
 </Description>
     <ReleaseNotes>
     </ReleaseNotes>

@@ -11,9 +11,6 @@ namespace EntityFramework.Functions
 
     public static partial class Function
     {
-        // The hard coded schema name "CodeFirstDatabaseSchema" is used by Entity Frameork.
-        public const string CodeFirstDatabaseSchema = nameof(CodeFirstDatabaseSchema);
-
         public static void AddFunctions(this DbModel model, Type functionsType)
         {
             if (model == null)
@@ -113,7 +110,7 @@ namespace EntityFramework.Functions
 
             EdmFunction storeFunction = EdmFunction.Create(
                 functionName,
-                CodeFirstDatabaseSchema, // model.StoreModel.Container.Name is "CodeFirstDatabase".
+                FunctionAttribute.CodeFirstDatabaseSchema, // model.StoreModel.Container.Name is always "CodeFirstDatabaseSchema".
                 DataSpace.SSpace, // <edmx:StorageModels>
                 new EdmFunctionPayload()
                 {

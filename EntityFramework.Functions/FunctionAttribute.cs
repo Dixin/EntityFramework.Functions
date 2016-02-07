@@ -27,43 +27,47 @@
     [AttributeUsage(AttributeTargets.Method)]
     public class FunctionAttribute : DbFunctionAttribute
     {
+        // The hard coded schema name "CodeFirstDatabaseSchema" is used by Entity Frameork.
+        public const string CodeFirstDatabaseSchema = nameof(CodeFirstDatabaseSchema);
+
         /// <summary>
         /// Identifies a function which is mapped to a store-defined function. Derived attributes are
         /// provided to simplify the attribute signature for different function types. 
         /// </summary>
-        /// <param name="type">The type of the fuction.</param>
+        /// <param name="type">The type of the function.</param>
         /// <param name="name">The name of the function.</param>
         /// <param name="namespaceName">
         /// If <paramref name="type"/> is <see cref="FunctionType.TableValuedFunction"/>, this must be the name of the DbContext.
         /// If <paramref name="type"/> is <see cref="FunctionType.ModelDefinedFunction"/>, this must be the namespace (not the name) of the the DbContext.
         /// For other function types, do not set this paramater for other function types.
         /// </param>
-        public FunctionAttribute(FunctionType type, string name, string namespaceName = Function.CodeFirstDatabaseSchema)
+        public FunctionAttribute(FunctionType type, string name, string namespaceName = CodeFirstDatabaseSchema)
             : base(namespaceName, name)
         {
-            this.Type = type;
-
             switch (type)
             {
                 case FunctionType.TableValuedFunction:
-                    if (namespaceName == Function.CodeFirstDatabaseSchema)
+                    if (CodeFirstDatabaseSchema.EqualsOrdinal(namespaceName))
                     {
-                        throw new ArgumentException("For Table Valued Functions the dbContextName parameter must be set to the name of the DbContext class.");
+                        throw new ArgumentException($"The {nameof(namespaceName)} parameter must be set for Table Valued Functions.");
                     }
                     break;
                 case FunctionType.ModelDefinedFunction:
-                    if (namespaceName == Function.CodeFirstDatabaseSchema)
+                    if (CodeFirstDatabaseSchema.EqualsOrdinal(namespaceName))
                     {
-                        throw new ArgumentException("For Model Defined Functions the namespaceName parameter must be set to the namespace of the DbContext class.");
+                        throw new ArgumentException($"For Model Defined Functions the {nameof(namespaceName)} parameter must be set to the namespace of the DbContext class.");
                     }
                     break;
+
                 default:
-                    if (namespaceName != Function.CodeFirstDatabaseSchema)
+                    if (!CodeFirstDatabaseSchema.EqualsOrdinal(namespaceName))
                     {
-                        throw new ArgumentException("The namespaceName parameter may only be set for Table Valued Functions.");
+                        throw new ArgumentException($"The {nameof(namespaceName)} parameter may only be set for Table Valued Functions and Model Valued Functions.");
                     }
                     break;
             }
+
+            this.Type = type;
 
             switch (type)
             {
@@ -124,17 +128,26 @@
 
     public class StoredProcedureAttribute : FunctionAttribute
     {
-        public StoredProcedureAttribute(string name) : base(FunctionType.StoredProcedure, name, Function.CodeFirstDatabaseSchema) { }
+        public StoredProcedureAttribute(string name)
+            : base(FunctionType.StoredProcedure, name)
+        {
+        }
     }
 
     public class NonComposableScalarValuedFunctionAttribute : FunctionAttribute
     {
-        public NonComposableScalarValuedFunctionAttribute(string name) : base(FunctionType.NonComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public NonComposableScalarValuedFunctionAttribute(string name)
+            : base(FunctionType.NonComposableScalarValuedFunction, name)
+        {
+        }
     }
 
     public class ComposableScalarValuedFunctionAttribute : FunctionAttribute
     {
-        public ComposableScalarValuedFunctionAttribute(string name) : base(FunctionType.ComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public ComposableScalarValuedFunctionAttribute(string name)
+            : base(FunctionType.ComposableScalarValuedFunction, name)
+        {
+        }
     }
 
     public class TableValuedFunctionAttribute : FunctionAttribute
@@ -144,8 +157,12 @@
         /// </summary>
         /// <param name="name">The name of the Table Valued Function in the data store.</param>
         /// <param name="dbContextName">The name of the <see cref="DbContext"/> class.</param>
-        public TableValuedFunctionAttribute(string name, string dbContextName) : base(FunctionType.TableValuedFunction, name, dbContextName) { }
+        public TableValuedFunctionAttribute(string name, string dbContextName)
+            : base(FunctionType.TableValuedFunction, name, dbContextName)
+        {
+        }
     }
+
     public class ModelDefinedFunctionAttribute : FunctionAttribute
     {
         /// <summary>
@@ -160,9 +177,10 @@
         /// The EntitySQL implementation of the function. EntitySQL is a varient of SQL which can be translated by a provider into a store query.
         /// Documentation for EntitySQL is here: https://msdn.microsoft.com/en-us/library/bb387145(v=vs.110).aspx 
         /// </param>
-        public ModelDefinedFunctionAttribute(string name, string namespaceName, string entitySql) : base(FunctionType.ModelDefinedFunction, name, namespaceName)
+        public ModelDefinedFunctionAttribute(string name, string namespaceName, string entitySql) 
+            : base(FunctionType.ModelDefinedFunction, name, namespaceName)
         {
-            EntitySql = entitySql;
+            this.EntitySql = entitySql;
         }
 
         public string EntitySql { get; }
@@ -170,17 +188,26 @@
 
     public class AggregateFunctionAttribute : FunctionAttribute
     {
-        public AggregateFunctionAttribute(string name) : base(FunctionType.AggregateFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public AggregateFunctionAttribute(string name)
+            : base(FunctionType.AggregateFunction, name)
+        {
+        }
     }
 
     public class BuiltInFunctionAttribute : FunctionAttribute
     {
-        public BuiltInFunctionAttribute(string name) : base(FunctionType.BuiltInFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public BuiltInFunctionAttribute(string name)
+            : base(FunctionType.BuiltInFunction, name)
+        {
+        }
     }
 
     public class NiladicFunctionAttribute : FunctionAttribute
     {
-        public NiladicFunctionAttribute(string name) : base(FunctionType.NiladicFunction, name, Function.CodeFirstDatabaseSchema) { }
+        public NiladicFunctionAttribute(string name)
+            : base(FunctionType.NiladicFunction, name)
+        {
+        }
     }
 
 

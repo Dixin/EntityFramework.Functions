@@ -65,10 +65,10 @@
         {
             using (AdventureWorks database = new AdventureWorks())
             {
-                var employeesWithContactInformation = from employee in database.People
-                                                      from contactInfo in database.ufnGetContactInformation(employee.BusinessEntityID)
-                                                      select new { employee.FirstName, contactInfo.JobTitle }
-                                                      ;
+                var employeesWithContactInformation =
+                    from employee in database.People
+                    from contactInfo in database.ufnGetContactInformation(employee.BusinessEntityID)
+                    select new {employee.FirstName, contactInfo.JobTitle};
                 var employeeWithContactInformation = employeesWithContactInformation.Take(1).ToList();
                 Assert.AreEqual(employeeWithContactInformation.Count, 1);
             }
@@ -205,25 +205,25 @@
             }
         }
 
-		[TestMethod]
-		public void ModelDefinedFunctionInLinqTest()
-		{
-			using (AdventureWorks database = new AdventureWorks())
-			{
-				var employees = from employee in database.People
-								where employee.Title != null
-								let formatted = employee.FormatName()
-								select new
-								{
-									formatted,
-									employee
-								}
-													  ;
-				var employeeData = employees.Take(1).ToList().FirstOrDefault();
-				Assert.IsNotNull(employeeData);
-				Assert.IsNotNull(employeeData.formatted);
-				Assert.AreEqual(employeeData.employee.FormatName(), employeeData.formatted);
-			}
-		}
-	}
+        [TestMethod]
+        public void ModelDefinedFunctionInLinqTest()
+        {
+            using (AdventureWorks database = new AdventureWorks())
+            {
+                var employees = from employee in database.People
+                                where employee.Title != null
+                                let formatted = employee.FormatName()
+                                select new
+                                {
+                                    formatted,
+                                    employee
+                                }
+                                                      ;
+                var employeeData = employees.Take(1).ToList().FirstOrDefault();
+                Assert.IsNotNull(employeeData);
+                Assert.IsNotNull(employeeData.formatted);
+                Assert.AreEqual(employeeData.employee.FormatName(), employeeData.formatted);
+            }
+        }
+    }
 }
