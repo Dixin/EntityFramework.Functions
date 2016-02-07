@@ -250,10 +250,10 @@ namespace EntityFramework.Functions
             <!-- CSDL content -->
             <edmx:ConceptualModels>
                 <Schema Namespace="AdventureWorks" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-                    <Function Name="HasMiddleName" ReturnType="Edm.Boolean>
+                    <Function Name="FormatName" ReturnType="Edm.String>
                         <Parameter Name="person" Type="AdventureWorks.Person" />
                         <DefiningExpression>
-                            person.MiddleName IS NOT NULL
+                            CASE WHEN person.Title IS NOT NULL THEN person.Title + ' ' ELSE '' END + person.FirstName + ' ' + person.LastName
                         </DefiningExpression>
                     </Function>
                 </Schema>
