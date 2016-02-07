@@ -61,7 +61,7 @@
         }
 
         [TestMethod]
-        public void ComposedTableValuedFunction()
+        public void ComposedTableValuedFunctionInLinqTest()
         {
             using (AdventureWorks database = new AdventureWorks())
             {
@@ -206,7 +206,7 @@
         }
 
 		[TestMethod]
-		public void ModelDefinedFunctionInLinq()
+		public void ModelDefinedFunctionInLinqTest()
 		{
 			using (AdventureWorks database = new AdventureWorks())
 			{
