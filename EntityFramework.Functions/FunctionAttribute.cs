@@ -25,6 +25,9 @@
     [AttributeUsage(AttributeTargets.Method)]
     public class FunctionAttribute : DbFunctionAttribute
     {
+        // The hard coded schema name "CodeFirstDatabaseSchema" is used by Entity Frameork.
+        public const string CodeFirstDatabaseSchema = nameof(CodeFirstDatabaseSchema);
+
         /// <summary>
         /// Identifies a function which is mapped to a store-defined function.
         /// </summary>
@@ -34,27 +37,27 @@
         /// Required for Table Valued Functions, where it should be the same as the name of the DbContext.
         /// Do not provide for other function types.
         /// </param>
-        public FunctionAttribute(FunctionType type, string name, string namespaceName = Function.CodeFirstDatabaseSchema)
+        public FunctionAttribute(FunctionType type, string name, string namespaceName = CodeFirstDatabaseSchema)
             : base(namespaceName, name)
         {
-            this.Type = type;
-
             switch (type)
             {
                 case FunctionType.TableValuedFunction:
-                    if (string.Equals(namespaceName, Function.CodeFirstDatabaseSchema, StringComparison.Ordinal))
+                    if (CodeFirstDatabaseSchema.EqualsOrdinal(namespaceName))
                     {
                         throw new ArgumentException($"The {nameof(namespaceName)} parameter must be set for Table Valued Functions.");
                     }
                     break;
 
                 default:
-                    if (!string.Equals(namespaceName, Function.CodeFirstDatabaseSchema, StringComparison.Ordinal))
+                    if (!CodeFirstDatabaseSchema.EqualsOrdinal(namespaceName))
                     {
                         throw new ArgumentException($"The {nameof(namespaceName)} parameter may only be set for Table Valued Functions.");
                     }
                     break;
             }
+
+            this.Type = type;
 
             switch (type)
             {
@@ -115,7 +118,7 @@
     public class StoredProcedureAttribute : FunctionAttribute
     {
         public StoredProcedureAttribute(string name)
-            : base(FunctionType.StoredProcedure, name, Function.CodeFirstDatabaseSchema)
+            : base(FunctionType.StoredProcedure, name)
         {
         }
     }
@@ -123,14 +126,14 @@
     public class NonComposableScalarValuedFunctionAttribute : FunctionAttribute
     {
         public NonComposableScalarValuedFunctionAttribute(string name)
-            : base(FunctionType.NonComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema)
+            : base(FunctionType.NonComposableScalarValuedFunction, name)
         {
         }
     }
     public class ComposableScalarValuedFunctionAttribute : FunctionAttribute
     {
         public ComposableScalarValuedFunctionAttribute(string name)
-            : base(FunctionType.ComposableScalarValuedFunction, name, Function.CodeFirstDatabaseSchema)
+            : base(FunctionType.ComposableScalarValuedFunction, name)
         {
         }
     }
@@ -151,7 +154,7 @@
     public class AggregateFunctionAttribute : FunctionAttribute
     {
         public AggregateFunctionAttribute(string name)
-            : base(FunctionType.AggregateFunction, name, Function.CodeFirstDatabaseSchema)
+            : base(FunctionType.AggregateFunction, name)
         {
         }
     }
@@ -159,7 +162,7 @@
     public class BuiltInFunctionAttribute : FunctionAttribute
     {
         public BuiltInFunctionAttribute(string name)
-            : base(FunctionType.BuiltInFunction, name, Function.CodeFirstDatabaseSchema)
+            : base(FunctionType.BuiltInFunction, name)
         {
         }
     }
@@ -167,7 +170,7 @@
     public class NiladicFunctionAttribute : FunctionAttribute
     {
         public NiladicFunctionAttribute(string name)
-            : base(FunctionType.NiladicFunction, name, Function.CodeFirstDatabaseSchema)
+            : base(FunctionType.NiladicFunction, name)
         {
         }
     }
