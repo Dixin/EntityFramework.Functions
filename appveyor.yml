@@ -4,7 +4,7 @@ configuration:
 - Release
 platform: Any CPU
 init:
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+- ps: 
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -19,6 +19,7 @@ install:
 before_build:
 - cmd: nuget restore -verbosity detailed
 build:
+  project: EntityFramework.Functions.appveyor.sln
   verbosity: detailed
 before_test:
 - ps: >-
@@ -33,7 +34,7 @@ before_test:
 
     $config = (gc $configPath) -as [xml]
 
-    $config.SelectSingleNode('//connectionStrings/add[@name="AdventureWorksConnectionString"]').connectionString = "Server=$server; Database=$database; Trusted_connection=true"
+    $config.SelectSingleNode('//connectionStrings[@name="EntityFramework.Functions.Tests.Properties.Settings.AdventureWorksConnectionString"]').connectionString = "Server=$server; Database=$database; Trusted_connection=true"
 
     $config.Save($configPath)
 
