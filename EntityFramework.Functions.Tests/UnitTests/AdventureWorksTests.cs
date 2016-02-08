@@ -217,8 +217,7 @@
                                 {
                                     formatted,
                                     employee
-                                }
-                                                      ;
+                                };
                 var employeeData = employees.Take(1).ToList().FirstOrDefault();
                 Assert.IsNotNull(employeeData);
                 Assert.IsNotNull(employeeData.formatted);

@@ -102,3 +102,20 @@ SELECT
             GROUP BY [K1]
         )  AS [GroupBy1]
     )  AS [Limit1]
+
+-- Model defined function.
+SELECT 
+    [Limit1].[BusinessEntityID] AS [BusinessEntityID], 
+    [Limit1].[C1] AS [C1], 
+    [Limit1].[Title] AS [Title], 
+    [Limit1].[FirstName] AS [FirstName], 
+    [Limit1].[LastName] AS [LastName]
+    FROM ( SELECT TOP (1) 
+        [Extent1].[BusinessEntityID] AS [BusinessEntityID], 
+        [Extent1].[Title] AS [Title], 
+        [Extent1].[FirstName] AS [FirstName], 
+        [Extent1].[LastName] AS [LastName], 
+        CASE WHEN ([Extent1].[Title] IS NOT NULL) THEN [Extent1].[Title] + N' ' ELSE N'' END + [Extent1].[FirstName] + N' ' + [Extent1].[LastName] AS [C1]
+        FROM [Person].[Person] AS [Extent1]
+        WHERE [Extent1].[Title] IS NOT NULL
+    )  AS [Limit1]
