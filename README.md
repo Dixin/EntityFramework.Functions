@@ -20,6 +20,7 @@
     <li>Aggregate functions</li>
     <li>Built-in functions</li>
     <li>Niladic functions</li>
+    <li>Model defined functions</li>
 </ul>
 [![Build status](https://ci.appveyor.com/api/projects/status/r4x7jaav6ldw68fa?svg=true)](https://ci.appveyor.com/project/Dixin/entityframework-functions)
 <p>EntityFramework.Functions library works on .NET 4.0, .NET 4.5, .NET 4.6, with <a href="https://msdn.microsoft.com/en-us/data/jj574253.aspx" target="_blank">Entity Framework 6.1.0 and later</a>. Entity Framework is the only dependency of this library.</p>
