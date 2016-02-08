@@ -34,7 +34,7 @@ before_test:
 
     $config = (gc $configPath) -as [xml]
 
-    $config.SelectSingleNode('//connectionStrings[@name="EntityFramework.Functions.Tests.Properties.Settings.AdventureWorksConnectionString"]').connectionString = "Server=$server; Database=$database; Trusted_connection=true"
+    $config.SelectSingleNode('//connectionStrings/add[@name="EntityFramework.Functions.Tests.Properties.Settings.AdventureWorksConnectionString"]').connectionString = "Server=$server; Database=$database; Trusted_connection=true"
 
     $config.Save($configPath)
 
