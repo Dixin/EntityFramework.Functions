@@ -48,6 +48,8 @@ before_test:
     $ldfPath = join-path $databaseDirectory "AdventureWorks_Log.ldf"
 
     sqlcmd -S "$server" -Q "Use [master]; CREATE DATABASE [$database] ON (FILENAME = '$mdfPath'),(FILENAME = '$ldfPath') FOR ATTACH"
+
+    sqlcmd -S "$server" -Q "Use [$database]; EXEC sys.sp_configure @configname = N'clr enabled', @configvalue = 1;"
 notifications:
 - provider: Email
   to:
