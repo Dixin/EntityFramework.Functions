@@ -3,33 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions", "EntityFramework.Functions\EntityFramework.Functions.csproj", "{20128F9B-B68D-4E51-A0E9-67EB1E7B9402}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions", "..\EntityFramework.Functions\EntityFramework.Functions.csproj", "{20128F9B-B68D-4E51-A0E9-67EB1E7B9402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Net45", "EntityFramework.Functions.Net45\EntityFramework.Functions.Net45.csproj", "{2FC7EE32-A93E-4B55-AE79-4F49C9EE5E70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Net45", "..\EntityFramework.Functions.Net45\EntityFramework.Functions.Net45.csproj", "{2FC7EE32-A93E-4B55-AE79-4F49C9EE5E70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Net46", "EntityFramework.Functions.Net46\EntityFramework.Functions.Net46.csproj", "{1F4A3422-908A-4EA0-98D8-B3AD8F402FAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Net46", "..\EntityFramework.Functions.Net46\EntityFramework.Functions.Net46.csproj", "{1F4A3422-908A-4EA0-98D8-B3AD8F402FAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Tests", "EntityFramework.Functions.Tests\EntityFramework.Functions.Tests.csproj", "{A8813069-8F37-4D70-886B-DEA7D846CBDF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{0ECE2C37-FA70-4424-90DB-637C2F2BE130}"
-	ProjectSection(SolutionItems) = preProject
-		Data\AdventureWorks_Data.mdf = Data\AdventureWorks_Data.mdf
-		Data\AdventureWorks_Log.ldf = Data\AdventureWorks_Log.ldf
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{2DF3286B-B7B1-4625-8D38-880166D22705}"
-	ProjectSection(SolutionItems) = preProject
-		Tools\CodeAnalysisDictionary.xml = Tools\CodeAnalysisDictionary.xml
-		Tools\TargetFrameworkVersion.prop = Tools\TargetFrameworkVersion.prop
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{237E1A20-1E42-455A-AED7-F8E6945A2EF7}"
-	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-		appveyor.yml = appveyor.yml
-		LICENSE = LICENSE
-		README.md = README.md
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Tests", "..\EntityFramework.Functions.Tests\EntityFramework.Functions.Tests.csproj", "{A8813069-8F37-4D70-886B-DEA7D846CBDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

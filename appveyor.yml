@@ -19,7 +19,7 @@ install:
 before_build:
 - cmd: nuget restore -verbosity detailed
 build:
-  project: EntityFramework.Functions.appveyor.sln
+  project: Tools\EntityFramework.Functions.appveyor.sln
   verbosity: detailed
 before_test:
 - ps: >-
