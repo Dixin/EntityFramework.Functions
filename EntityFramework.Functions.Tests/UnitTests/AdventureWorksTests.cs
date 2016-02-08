@@ -61,7 +61,7 @@
         }
 
         [TestMethod]
-        public void ComposedTableValuedFunction()
+        public void ComposedTableValuedFunctionInLinqTest()
         {
             using (AdventureWorks database = new AdventureWorks())
             {
@@ -202,6 +202,27 @@
                 Assert.AreEqual("dbo", firstCategory.SessionUser, true, CultureInfo.InvariantCulture);
                 Assert.AreEqual($@"{Environment.UserDomainName}\{Environment.UserName}", firstCategory.SystemUser, true, CultureInfo.InvariantCulture);
                 Assert.AreEqual("dbo", firstCategory.User, true, CultureInfo.InvariantCulture);
+            }
+        }
+
+        [TestMethod]
+        public void ModelDefinedFunctionInLinqTest()
+        {
+            using (AdventureWorks database = new AdventureWorks())
+            {
+                var employees = from employee in database.People
+                                where employee.Title != null
+                                let formatted = employee.FormatName()
+                                select new
+                                {
+                                    formatted,
+                                    employee
+                                }
+                                                      ;
+                var employeeData = employees.Take(1).ToList().FirstOrDefault();
+                Assert.IsNotNull(employeeData);
+                Assert.IsNotNull(employeeData.formatted);
+                Assert.AreEqual(employeeData.employee.FormatName(), employeeData.formatted);
             }
         }
     }

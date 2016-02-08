@@ -55,7 +55,7 @@
     //
     //    public void Write(BinaryWriter writer) => writer.Write(this.concat?.ToString() ?? string.Empty);
     // }
-
+    
     // [Serializable]
     // [SqlUserDefinedAggregate(
     // Format.UserDefined,
