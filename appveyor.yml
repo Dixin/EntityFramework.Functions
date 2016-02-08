@@ -1,0 +1,21 @@
+version: 1.1.0.{build}
+configuration:
+- Debug
+- Release
+platform: Any CPU
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+build:
+  verbosity: detailed
+notifications:
+- provider: Email
+  to:
+  - dixinyan@live.com
+  subject: AppVeyar EntityFramework.Functions
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
