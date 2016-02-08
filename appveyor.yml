@@ -4,32 +4,7 @@ configuration:
 - Release
 platform: Any CPU
 init:
-- ps: >-
-    $server = "(local)\SQL2014"
-
-    $database = "AdventureWorks"
-
-
-    # Replace the db connection with the local instance.
-
-    $configPath = "$($env:appveyor_build_folder)\EntityFramework.Functions.Tests\bin\$($env:CONFIGURATION)\EntityFramework.Functions.Tests.dll.config"
-
-    $config = (gc $configPath) -as [xml]
-
-    $config.SelectSingleNode('//connectionStrings/add[@name="AdventureWorksConnectionString"]').connectionString = "Server=$server; Database=$database; Trusted_connection=true"
-
-    $config.Save($configPath)
-
-
-    # Attach mdf to local instance.
-
-    $databaseDirectory = "$($env:appveyor_build_folder)\Data"
-
-    $mdfPath = join-path $databaseDirectory "AdventureWorks_Data.mdf"
-
-    $ldfPath = join-path $databaseDirectory "AdventureWorks_Log.ldf"
-
-    sqlcmd -S "$server" -Q "Use [master]; CREATE DATABASE [$database] ON (FILENAME = '$mdfPath'),(FILENAME = '$ldfPath') FOR ATTACH"
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
