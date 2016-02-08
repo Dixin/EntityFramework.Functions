@@ -50,6 +50,8 @@ before_test:
     sqlcmd -S "$server" -Q "Use [master]; CREATE DATABASE [$database] ON (FILENAME = '$mdfPath'),(FILENAME = '$ldfPath') FOR ATTACH"
 
     sqlcmd -S "$server" -Q "Use [$database]; EXEC sys.sp_configure @configname = N'clr enabled', @configvalue = 1;"
+
+    sqlcmd -S "$server" -Q "Use [$database]; RECONFIGURE;"
 notifications:
 - provider: Email
   to:
