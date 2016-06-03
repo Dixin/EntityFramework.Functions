@@ -22,8 +22,11 @@ namespace EntityFramework.Functions
             }
 
             IEnumerable<Type> complexTypes = assembly
-                .GetExportedTypes()
-                .Where(type => Attribute.IsDefined((MemberInfo)type, typeof(ComplexTypeAttribute)));
+                .GetReferencedAssemblies()
+                .Select(Assembly.Load)
+                .Concat(Enumerable.Repeat(assembly, 1))
+                .SelectMany(assemblyOrReference => assemblyOrReference.GetExportedTypes())
+                .Where(type => Attribute.IsDefined(type, typeof(ComplexTypeAttribute)));
             MethodInfo complexTypeMethod = typeof(DbModelBuilder).GetMethod(nameof(modelBuilder.ComplexType));
             complexTypes.ForEach(complexType =>
                 complexTypeMethod.MakeGenericMethod(complexType).Invoke(modelBuilder, null));

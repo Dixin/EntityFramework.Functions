@@ -2,6 +2,9 @@
 {
     using System;
     using System.IO;
+    using System.Data.SqlClient;
+
+    using EntityFramework.Functions.Tests.Properties;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -21,6 +24,20 @@
                 "DataDirectory",
                 // .. in path does not work. so use new DirectoryInfo(path).FullName to remove .. in path.
                 new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data")).FullName);
+
+            using (SqlConnection connection = new SqlConnection(Settings.Default.AdventureWorksConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("EXEC sys.sp_configure @configname = N'clr enabled', @configvalue = 1", connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                using (SqlCommand command = new SqlCommand("RECONFIGURE", connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

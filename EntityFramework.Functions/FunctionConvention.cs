@@ -16,12 +16,12 @@
 
         public void Apply(EntityContainer item, DbModel model)
         {
+            // item is ignored. It is just model.StoreModel.Container.
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            // item is ignored. It is just model.StoreModel.Container.
             this.functionsTypes.ForEach(model.AddFunctions);
         }
     }

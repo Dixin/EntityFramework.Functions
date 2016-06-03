@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2FC7EE32-A93E-4B55-AE79-4F49C9EE5E70}</ProjectGuid>
+    <ProjectGuid>{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EntityFramework.Functions</RootNamespace>
-    <AssemblyName>EntityFramework.Functions</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>EntityFramework.Functions.Tests.Library</RootNamespace>
+    <AssemblyName>EntityFramework.Functions.Tests.Library</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -43,46 +43,20 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\EntityFramework.Functions\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFramework.Functions\DbContextExtensions.cs">
-      <Link>DbContextExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFramework.Functions\Function.cs">
-      <Link>Function.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFramework.Functions\Function.DbModel.cs">
-      <Link>Function.DbModel.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFramework.Functions\Function.DbModelBuilder.cs">
-      <Link>Function.DbModelBuilder.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFramework.Functions\Function.MethodInfo.cs">
-      <Link>Function.MethodInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFramework.Functions\FunctionAttribute.cs">
-      <Link>FunctionAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFramework.Functions\FunctionConvention.cs">
-      <Link>FunctionConvention.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFramework.Functions\Utilities.cs">
-      <Link>Utilities.cs</Link>
-    </Compile>
     <Compile Include="..\Tools\CommonAssemblyInfo.cs">
-      <Link>CommonAssemblyInfo.cs</Link>
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Examples\Tables.cs" />
+    <Compile Include="Examples\ComplexTypes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(ProjectDir)..\Tools\TargetFrameworkVersion.prop" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

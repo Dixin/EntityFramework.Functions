@@ -5,6 +5,8 @@
     using System.Data.Entity.Core.Objects;
     using System.Linq;
 
+    using EntityFramework.Functions.Tests.Library.Examples;
+
     public partial class AdventureWorks
     {
         public const string dbo = nameof(dbo);

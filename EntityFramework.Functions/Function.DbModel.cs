@@ -123,7 +123,7 @@ namespace EntityFramework.Functions
                     Parameters = model.GetStoreParameters(methodInfo, functionAttribute),
                     ReturnParameters = model.GetStoreReturnParameters(methodInfo, functionAttribute),
                     CommandText = methodInfo.GetStoreCommandText(functionAttribute, functionName),
-                    
+
                 },
                 null);
             model.StoreModel.AddItem(storeFunction);
@@ -258,7 +258,7 @@ namespace EntityFramework.Functions
             */
             // Build above <ConceptualModels> imperatively.
 
-            var modelNamespaceName = model.ConceptualModel.EntityTypes.Select(e => e.NamespaceName).FirstOrDefault();
+            string modelNamespaceName = model.ConceptualModel.EntityTypes.Select(e => e.NamespaceName).FirstOrDefault();
             if (functionAttribute.NamespaceName != modelNamespaceName)
             {
                 throw new InvalidOperationException($"The ModelDefinedFunctionAttribute for method {methodInfo.Name} must have namespaceName set to '{modelNamespaceName}'.");
@@ -297,7 +297,7 @@ namespace EntityFramework.Functions
                         {
                             case FunctionType.NiladicFunction:
                                 throw new NotSupportedException(
-                                    $"Parameter of method {methodInfo.Name} is not supporteds.");
+                                    $"Parameter of method {methodInfo.Name} is not supported.");
 
                             case FunctionType.AggregateFunction:
                                 {
@@ -378,7 +378,7 @@ namespace EntityFramework.Functions
                 if (parameterAttributeClrType != null && parameterAttributeClrType != parameterClrType)
                 {
                     throw new NotSupportedException(
-                        $"Parameter {parameterInfo.Name} of method {methodInfo.Name} is not supported. It is of {parameterClrType.FullName} type, but its {nameof(ParameterAttribute)}.{nameof(ParameterAttribute.ClrType)} has a fifferent type {parameterAttributeClrType.FullName}");
+                        $"Parameter {parameterInfo.Name} of method {methodInfo.Name} is not supported. It is of {parameterClrType.FullName} type, but its {nameof(ParameterAttribute)}.{nameof(ParameterAttribute.ClrType)} has a different type {parameterAttributeClrType.FullName}");
                 }
             }
 
@@ -409,15 +409,10 @@ namespace EntityFramework.Functions
             this DbModel model, Type clrType, MethodInfo methodInfo, ParameterInfo parameterInfo)
         {
             // targetStoreEdmType = model.ProviderManifest.GetStoreType(TypeUsage.CreateDefaultTypeUsage(primitiveEdmType)).EdmType;
-            if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                clrType = clrType.GetGenericArguments().Single();
-            }
-
             PrimitiveType storePrimitiveType = model
                 .ProviderManifest
                 .GetStoreTypes()
-                .FirstOrDefault(primitiveType => primitiveType.ClrEquivalentType == clrType);
+                .FirstOrDefault(primitiveType => primitiveType.ClrEquivalentType == (Nullable.GetUnderlyingType(clrType) ?? clrType));
             if (storePrimitiveType == null)
             {
                 throw new NotSupportedException(
@@ -533,13 +528,10 @@ namespace EntityFramework.Functions
         {
             ParameterInfo[] parameters = methodInfo.GetParameters().ToArray();
             return parameters
-                .Select((parameterInfo) =>
-                {
-                    return FunctionParameter.Create(
-                        parameterInfo.GetCustomAttribute<ParameterAttribute>()?.Name ?? parameterInfo.Name,
-                        model.GetModelStructualType(parameterInfo.ParameterType, methodInfo),
-                        ParameterMode.In);
-                })
+                .Select((parameterInfo) => FunctionParameter.Create(
+                    parameterInfo.GetCustomAttribute<ParameterAttribute>()?.Name ?? parameterInfo.Name,
+                    model.GetModelStructualType(parameterInfo.ParameterType, methodInfo),
+                    ParameterMode.In))
                 .ToArray();
         }
 
@@ -579,8 +571,7 @@ namespace EntityFramework.Functions
                 {
                     // returnParameterInfo.ParameterType is IQueryable<T>.
                     Type returnParameterClrType = returnParameterInfo.ParameterType.GetGenericArguments().Single();
-                    StructuralType modelReturnParameterStructuralType = model.GetModelStructualType(
-                        returnParameterClrType, methodInfo);
+                    StructuralType modelReturnParameterStructuralType = model.GetModelStructualType(returnParameterClrType, methodInfo);
                     modelReturnParameterEdmTypes = Enumerable.Repeat(modelReturnParameterStructuralType, 1);
                 }
                 else
@@ -591,7 +582,7 @@ namespace EntityFramework.Functions
                         && returnParameterAttributeClrType != returnParameterClrType)
                     {
                         throw new NotSupportedException(
-                            $"Return parameter of method {methodInfo.Name} is of {returnParameterClrType.FullName}, but its {nameof(ParameterAttribute)}.{nameof(ParameterAttribute.ClrType)} has a fifferent type {returnParameterAttributeClrType.FullName}");
+                            $"Return parameter of method {methodInfo.Name} is of {returnParameterClrType.FullName}, but its {nameof(ParameterAttribute)}.{nameof(ParameterAttribute.ClrType)} has a different type {returnParameterAttributeClrType.FullName}");
                     }
 
                     PrimitiveType returnParameterPrimitiveType = model.GetModelPrimitiveType(
@@ -633,7 +624,7 @@ namespace EntityFramework.Functions
                 if (parameterAttributeClrType != null && parameterAttributeClrType != parameterClrType)
                 {
                     throw new NotSupportedException(
-                        $"Parameter {parameterInfo.Name} of method {methodInfo.Name} if of {parameterClrType.FullName}, but its {nameof(ParameterAttribute)}.{nameof(ParameterAttribute.ClrType)} has a fifferent type {parameterAttributeClrType.FullName}");
+                        $"Parameter {parameterInfo.Name} of method {methodInfo.Name} if of {parameterClrType.FullName}, but its {nameof(ParameterAttribute)}.{nameof(ParameterAttribute.ClrType)} has a different type {parameterAttributeClrType.FullName}");
                 }
             }
 
@@ -644,7 +635,7 @@ namespace EntityFramework.Functions
         {
             // Parameter and return parameter can be Nullable<T>.
             // Return parameter can be IQueryable<T>, ObjectResult<T>.
-            if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (clrType.IsGenericType)
             {
                 Type genericTypeDefinition = clrType.GetGenericTypeDefinition();
                 if (genericTypeDefinition == typeof(Nullable<>)
@@ -683,34 +674,124 @@ namespace EntityFramework.Functions
             return modelPrimitiveType;
         }
 
-        private static StructuralType GetModelStructualType(
-            this DbModel model, Type clrType, MethodInfo methodInfo)
+        private static StructuralType GetModelStructualType(this DbModel model, Type clrType, MethodInfo methodInfo)
         {
-            StructuralType modelStructualType = model
-                .ConceptualModel
-                .EntityTypes
-                .OfType<StructuralType>()
-                .Concat(model.ConceptualModel.ComplexTypes)
-                .FirstOrDefault(structuralType => structuralType.FullName.EqualsOrdinal(clrType.FullName));
-            if (modelStructualType == null)
+            EntityType modelEntityType = model.GetModelEntityType(clrType, methodInfo);
+            if (modelEntityType != null)
             {
-                // Cannot add missing complex type instantly. The following code does not work.
-                // if (Attribute.IsDefined(clrType, typeof(ComplexTypeAttribute)))
-                // {
-                //    MethodInfo complexTypeMethod = typeof(DbModelBuilder).GetMethod(nameof(modelBuilder.ComplexType));
-                //    complexTypeMethod.MakeGenericMethod(clrType).Invoke(modelBuilder, null);
-                //    model.Compile();
-                //    modelStructualType = model
-                //        .ConceptualModel
-                //        .ComplexTypes
-                //        .FirstOrDefault(complexType=> complexType.FullName.EqualsOrdinal(clrType.FullName));
-                // }
-
-                throw new NotSupportedException(
-                    $"{clrType.FullName} for method {methodInfo.Name} is not supported in conceptual model as a structual type.");
+                return modelEntityType;
             }
 
-            return modelStructualType;
+            ComplexType complexType = model.GetModelComplexType(clrType, methodInfo);
+            if (complexType != null)
+            {
+                return complexType;
+            }
+
+            throw new NotSupportedException(
+                $"{clrType.FullName} for method {methodInfo.Name} is not supported in conceptual model as a structural type.");
+        }
+
+        private static EntityType GetModelEntityType(this DbModel model, Type clrType, MethodInfo methodInfo)
+        {
+            PropertyInfo[] clrProperties = clrType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty);
+            EntityType[] entityTypes = model
+                .ConceptualModel
+                .EntityTypes
+                .Where(entityType =>
+                    entityType.FullName.EqualsOrdinal(clrType.FullName)
+                    || entityType.Name.EqualsOrdinal(clrType.Name)
+                    && entityType
+                        .Properties
+                        .All(edmProperty => clrProperties
+                            .Any(clrProperty =>
+                            {
+                                if (!edmProperty.Name.EqualsOrdinal(clrProperty.Name))
+                                {
+                                    return false;
+                                }
+
+                                // Entity type's property can be either primitive type or another complex type.
+                                if (edmProperty.PrimitiveType != null)
+                                {
+                                    // Entity type's property is primitive type.
+                                    return edmProperty.PrimitiveType.ClrEquivalentType == (Nullable.GetUnderlyingType(clrProperty.PropertyType) ?? clrProperty.PropertyType);
+                                }
+
+                                if (edmProperty.ComplexType != null)
+                                {
+                                    // Entity type's property is complex type.
+                                    return edmProperty.ComplexType.Name.EqualsOrdinal(clrProperty.PropertyType.Name);
+                                }
+
+                                return false;
+                            })))
+                .ToArray();
+
+            if (entityTypes.Length > 1)
+            {
+                throw new InvalidOperationException(
+                    $"{clrType.FullName} for method {methodInfo.Name} has multiple ambiguous matching entity types in conceptual model: {string.Join(", ", entityTypes.Select(entityType => entityType.FullName))}.");
+            }
+
+            return entityTypes.SingleOrDefault();
+        }
+
+        private static ComplexType GetModelComplexType(this DbModel model, Type clrType, MethodInfo methodInfo)
+        {
+            // Cannot add missing complex type instantly. The following code does not work.
+            // if (Attribute.IsDefined(clrType, typeof(ComplexTypeAttribute)))
+            // {
+            //    MethodInfo complexTypeMethod = typeof(DbModelBuilder).GetMethod(nameof(modelBuilder.ComplexType));
+            //    complexTypeMethod.MakeGenericMethod(clrType).Invoke(modelBuilder, null);
+            //    model.Compile();
+            //    modelStructualType = model
+            //        .ConceptualModel
+            //        .ComplexTypes
+            //        .FirstOrDefault(complexType => complexType.FullName.EqualsOrdinal(clrType.FullName));
+            // }
+
+            PropertyInfo[] clrProperties = clrType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty);
+            ComplexType[] modelComplexTypes = model
+                .ConceptualModel
+                .ComplexTypes
+                .Where(complexType =>
+                    complexType.FullName.EqualsOrdinal(clrType.FullName)
+                    || complexType.Name.EqualsOrdinal(clrType.Name)
+                    && complexType
+                        .Properties
+                        .All(edmProperty => clrProperties
+                            .Any(clrProperty =>
+                            {
+                                if (!edmProperty.Name.EqualsOrdinal(clrProperty.Name))
+                                {
+                                    return false;
+                                }
+
+                                // Complex type's property can be either primitive type or another complex type.
+                                if (edmProperty.PrimitiveType != null)
+                                {
+                                    // Complex type's property is primitive type.
+                                    return edmProperty.PrimitiveType.ClrEquivalentType == (Nullable.GetUnderlyingType(clrProperty.PropertyType) ?? clrProperty.PropertyType);
+                                }
+
+                                if (edmProperty.ComplexType != null)
+                                {
+                                    // Complex type's property is complex type.
+                                    return edmProperty.ComplexType.Name.EqualsOrdinal(clrProperty.PropertyType.Name);
+                                }
+
+                                return false;
+                            })))
+                .ToArray();
+
+            if (modelComplexTypes.Length > 1)
+            {
+                throw new InvalidOperationException(
+                    $"{clrType.FullName} for method {methodInfo.Name} has multiple ambiguous matching complex types in conceptual model: {string.Join(", ", modelComplexTypes.Select(complexType => complexType.FullName))}.");
+            }
+
+            return modelComplexTypes.SingleOrDefault();
         }
 
         private static IList<EntitySet> GetModelEntitySets(this DbModel model, MethodInfo methodInfo, FunctionAttribute functionAttribute)

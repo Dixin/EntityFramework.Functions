@@ -7,6 +7,7 @@
     using System.Linq;
 
     using EntityFramework.Functions.Tests.Examples;
+    using EntityFramework.Functions.Tests.Library.Examples;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 

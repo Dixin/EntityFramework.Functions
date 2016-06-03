@@ -5,10 +5,11 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity;
 
+    using EntityFramework.Functions.Tests.Library.Examples;
+    
     public partial class AdventureWorks
     {
         public const string Production = nameof(Production);
-        public const string Person = nameof(Person);
 
         public DbSet<ProductCategory> ProductCategories { get; set; }
 
@@ -20,7 +21,7 @@
     }
 
     [Table(nameof(ProductCategory), Schema = AdventureWorks.Production)]
-    public partial class ProductCategory
+    public class ProductCategory
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,10 +29,12 @@
 
         [MaxLength(50)]
         public string Name { get; set; }
+
+        public virtual ICollection<ProductSubcategory> ProductSubcategories { get; } = new HashSet<ProductSubcategory>();
     }
 
     [Table(nameof(ProductSubcategory), Schema = AdventureWorks.Production)]
-    public partial class ProductSubcategory
+    public class ProductSubcategory
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -39,10 +42,16 @@
 
         [MaxLength(50)]
         public string Name { get; set; }
+
+        public int? ProductCategoryID { get; set; }
+
+        public ProductCategory ProductCategory { get; set; }
+
+        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
     }
 
     [Table(nameof(Product), Schema = AdventureWorks.Production)]
-    public partial class Product
+    public class Product
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -52,47 +61,9 @@
         public string Name { get; set; }
 
         public decimal ListPrice { get; set; }
-    }
-
-    public partial class ProductCategory
-    {
-        public virtual ICollection<ProductSubcategory> ProductSubcategories { get; } = new HashSet<ProductSubcategory>();
-    }
-
-    public partial class ProductSubcategory
-    {
-        public int? ProductCategoryID { get; set; }
-
-        public ProductCategory ProductCategory { get; set; }
-    }
-
-    public partial class ProductSubcategory
-    {
-        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
-    }
-
-    public partial class Product
-    {
-        public ProductSubcategory ProductSubcategory { get; set; }
 
         public int? ProductSubcategoryID { get; set; }
-    }
 
-
-    [Table(nameof(Person), Schema = AdventureWorks.Person)]
-    public partial class Person
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BusinessEntityID { get; set; }
-
-        [MaxLength(8)]
-        public string Title { get; set; }
-
-        [MaxLength(50)]
-        public string FirstName { get; set; }
-
-        [MaxLength(50)]
-        public string LastName { get; set; }
+        public ProductSubcategory ProductSubcategory { get; set; }
     }
 }
