@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace EntityFramework.Functions
 {
     using System;
@@ -220,25 +222,34 @@ namespace EntityFramework.Functions
     </edmx:Mappings>
             */
             // Build above <Mappings> imperatively.
-            FunctionImportMapping mapping;
             if (modelFunction.IsComposableAttribute)
             {
-                mapping = new FunctionImportMappingComposable(
+                FunctionImportMappingComposable mapping = new FunctionImportMappingComposable(
                     modelFunction,
                     storeFunction,
                     new FunctionImportResultMapping(),
                     model.ConceptualToStoreMapping);
+                if (functionAttribute.Type == FunctionType.TableValuedFunction)
+                {
+                    EntityType modelFunctionReturnEntityType = (modelFunction.ReturnParameter.TypeUsage.EdmType as CollectionType)?.TypeUsage.EdmType as EntityType;
+                    if (modelFunctionReturnEntityType != null)
+                    {
+                        // Table-valued function returning entity type is not supported. The following code does not work:
+                        // mapping.ResultMapping.TypeMappings.ToArray().ForEach(typeMapping => mapping.ResultMapping.RemoveTypeMapping(typeMapping));
+                        throw new NotSupportedException($"Entity type {modelFunctionReturnEntityType.FullName} returned by table-valued function {methodInfo.Name} is not supported by Entity Framework code first. Please have the method return complex type. See discussion here for details: https://github.com/Dixin/EntityFramework.Functions/issues/7.");
+                    }
+                }
+                model.ConceptualToStoreMapping.AddFunctionImportMapping(mapping);
             }
             else
             {
-                mapping = new FunctionImportMappingNonComposable(
+                FunctionImportMappingNonComposable mapping = new FunctionImportMappingNonComposable(
                     modelFunction,
                     storeFunction,
                     Enumerable.Empty<FunctionImportResultMapping>(),
                     model.ConceptualToStoreMapping);
+                model.ConceptualToStoreMapping.AddFunctionImportMapping(mapping);
             }
-
-            model.ConceptualToStoreMapping.AddFunctionImportMapping(mapping);
         }
 
         private static void AddModelDefinedFunction(DbModel model, MethodInfo methodInfo, ModelDefinedFunctionAttribute functionAttribute)
@@ -279,8 +290,6 @@ namespace EntityFramework.Functions
                 null);
             model.ConceptualModel.AddItem(modelFunction);
         }
-
-
 
         private static IList<FunctionParameter> GetStoreParameters
             (this DbModel model, MethodInfo methodInfo, FunctionAttribute functionAttribute) => methodInfo
@@ -473,17 +482,30 @@ namespace EntityFramework.Functions
                 Type storeReturnParameterClrType = returnParameterInfo.ParameterType.GetGenericArguments().Single();
                 StructuralType modelReturnParameterStructuralType = model.GetModelStructualType(
                     storeReturnParameterClrType, methodInfo);
-                RowType storeReturnParameterRowType = RowType.Create(
-                    modelReturnParameterStructuralType
-                        .Members
-                        .Select(member => EdmProperty.Create(
-                            member.Name, model.ProviderManifest.GetStoreType(member.TypeUsage))),
-                    null); // Collection of RowType.
+                ComplexType modelReturnParameterComplexType = modelReturnParameterStructuralType as ComplexType;
+                RowType storeReturnParameterRowType;
+                if (modelReturnParameterComplexType != null)
+                {
+                    storeReturnParameterRowType = RowType.Create(modelReturnParameterComplexType.Properties, null);
+                }
+                else
+                {
+                    EntityType modelReturnParameterEntityType = modelReturnParameterStructuralType as EntityType;
+                    if (modelReturnParameterEntityType != null)
+                    {
+                        storeReturnParameterRowType = RowType.Create(modelReturnParameterEntityType.Properties, null);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException($"Structural type {modelReturnParameterStructuralType.FullName} of method {methodInfo.Name} cannot be converted to {nameof(RowType)}.");
+                    }
+                }
+
                 return new FunctionParameter[]
                     {
                         FunctionParameter.Create(
                             "ReturnType",
-                            storeReturnParameterRowType.GetCollectionType(),
+                            storeReturnParameterRowType.GetCollectionType(), // Collection of RowType.
                             ParameterMode.ReturnValue)
                     };
             }
@@ -497,12 +519,10 @@ namespace EntityFramework.Functions
             // Composable scalar-valued/Aggregate/Built in/Niladic function.
             // <Function Name="ufnGetProductListPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" 
             //    ReturnType ="money">
-            PrimitiveType storeReturnParameterPrimitiveType = model.GetStoreParameterPrimitiveType(
-                    methodInfo, returnParameterInfo, functionAttribute);
+            PrimitiveType storeReturnParameterPrimitiveType = model.GetStoreParameterPrimitiveType(methodInfo, returnParameterInfo, functionAttribute);
             return new FunctionParameter[]
                 {
-                    FunctionParameter.Create(
-                        "ReturnType", storeReturnParameterPrimitiveType, ParameterMode.ReturnValue)
+                    FunctionParameter.Create("ReturnType", storeReturnParameterPrimitiveType, ParameterMode.ReturnValue)
                 };
         }
 
@@ -585,8 +605,7 @@ namespace EntityFramework.Functions
                             $"Return parameter of method {methodInfo.Name} is of {returnParameterClrType.FullName}, but its {nameof(ParameterAttribute)}.{nameof(ParameterAttribute.ClrType)} has a different type {returnParameterAttributeClrType.FullName}");
                     }
 
-                    PrimitiveType returnParameterPrimitiveType = model.GetModelPrimitiveType(
-                        returnParameterClrType, methodInfo);
+                    PrimitiveType returnParameterPrimitiveType = model.GetModelPrimitiveType(returnParameterClrType, methodInfo);
                     modelReturnParameterEdmTypes = Enumerable.Repeat(returnParameterPrimitiveType, 1);
                 }
             }
@@ -802,8 +821,7 @@ namespace EntityFramework.Functions
                 throw new NotSupportedException($"The return parameter type of {methodInfo.Name} is not supported.");
             }
 
-            if (functionAttribute.Type == FunctionType.StoredProcedure
-                && returnParameterInfo.ParameterType != typeof(int))
+            if (functionAttribute.Type == FunctionType.StoredProcedure && returnParameterInfo.ParameterType != typeof(int))
             {
                 // returnParameterInfo.ParameterType is ObjectResult<T>.
                 Type[] returnParameterClrTypes = methodInfo.GetStoredProcedureReturnTypes().ToArray();
@@ -818,8 +836,7 @@ namespace EntityFramework.Functions
                             .ConceptualModel
                             .Container
                             .EntitySets
-                            .FirstOrDefault(entitySet =>
-                                entitySet.ElementType.FullName.EqualsOrdinal(clrType.FullName));
+                            .FirstOrDefault(entitySet => entitySet.ElementType == model.GetModelEntityType(clrType, methodInfo)); // TODO: bug.
                         if (modelEntitySet == null)
                         {
                             throw new NotSupportedException(
@@ -830,6 +847,28 @@ namespace EntityFramework.Functions
                     }).ToArray();
                 }
             }
+            // When table-valued function returning entity type is not supported. the following code does not work:
+            // else if (functionAttribute.Type == FunctionType.TableValuedFunction)
+            // {
+            //    // returnParameterInfo.ParameterType is IQueryable<T>.
+            //    Type returnParameterClrType = returnParameterInfo.ParameterType.GetGenericArguments().Single();
+            //    EntityType returnParameterEntityType = model.GetModelEntityType(returnParameterClrType, methodInfo);
+            //    if (returnParameterEntityType != null)
+            //    {
+            //        EntitySet modelEntitySet = model
+            //            .ConceptualModel
+            //            .Container
+            //            .EntitySets
+            //            .FirstOrDefault(entitySet => entitySet.ElementType == returnParameterEntityType);
+            //        if (modelEntitySet == null)
+            //        {
+            //            throw new NotSupportedException(
+            //                $"{returnParameterInfo.ParameterType.FullName} for method {methodInfo.Name} is not supported in conceptual model as entity set.");
+            //        }
+
+            //        return new EntitySet[] { modelEntitySet };
+            //    }
+            // }
 
             // Do not return new EntitySet[0], which causes a ArgumentException:
             // The number of entity sets should match the number of return parameters.

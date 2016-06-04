@@ -39,11 +39,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -73,7 +73,7 @@
     <Compile Include="Examples\Functions.cs" />
     <Compile Include="Examples\Tables.cs" />
     <Compile Include="Examples\ModelDefinedFunctions.cs" />
-    <Compile Include="UnitTests\AdventureWorksTests.cs" />
+    <Compile Include="UnitTests\FunctionTests.cs" />
     <Compile Include="Examples\BuiltInFunctions.cs" />
     <Compile Include="Examples\NiladicFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

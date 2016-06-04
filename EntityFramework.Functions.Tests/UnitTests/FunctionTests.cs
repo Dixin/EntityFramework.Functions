@@ -67,7 +67,7 @@
             using (AdventureWorks database = new AdventureWorks())
             {
                 var employeesWithContactInformation =
-                    from employee in database.People
+                    from employee in database.Persons
                     from contactInfo in database.ufnGetContactInformation(employee.BusinessEntityID)
                     select new {employee.FirstName, contactInfo.JobTitle};
                 var employeeWithContactInformation = employeesWithContactInformation.Take(1).ToList();
@@ -211,7 +211,7 @@
         {
             using (AdventureWorks database = new AdventureWorks())
             {
-                var employees = from employee in database.People
+                var employees = from employee in database.Persons
                                 where employee.Title != null
                                 let formatted = employee.FormatName()
                                 select new

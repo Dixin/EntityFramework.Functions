@@ -10,6 +10,7 @@
     public partial class AdventureWorks
     {
         public const string dbo = nameof(dbo);
+
         public const string NameSpace = nameof(AdventureWorks);
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

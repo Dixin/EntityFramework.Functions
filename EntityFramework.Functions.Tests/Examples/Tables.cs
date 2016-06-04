@@ -17,7 +17,7 @@
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<Person> People { get; set; }
+        public DbSet<Person> Persons { get; set; }
     }
 
     [Table(nameof(ProductCategory), Schema = AdventureWorks.Production)]
