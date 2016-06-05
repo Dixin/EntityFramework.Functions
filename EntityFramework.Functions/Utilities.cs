@@ -2,6 +2,8 @@ namespace EntityFramework.Functions
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity.Core.Metadata.Edm;
+    using System.Linq;
     using System.Reflection;
 
     internal static class StringExtensions
@@ -18,6 +20,29 @@ namespace EntityFramework.Functions
             {
                 next(value);
             }
+        }
+    }
+
+    internal static class EdmPropertyExtensions
+    {
+        internal static EdmProperty Clone(this EdmProperty property)
+        {
+            EdmProperty clone = EdmProperty.Create(property.Name, property.TypeUsage);
+            clone.CollectionKind = property.CollectionKind;
+            clone.ConcurrencyMode = property.ConcurrencyMode;
+            clone.IsFixedLength = property.IsFixedLength;
+            clone.IsMaxLength = property.IsMaxLength;
+            clone.IsUnicode = property.IsUnicode;
+            clone.MaxLength = property.MaxLength;
+            clone.Precision = property.Precision;
+            clone.Scale = property.Scale;
+            clone.StoreGeneratedPattern = property.StoreGeneratedPattern;
+            clone.SetMetadataProperties(property
+                .MetadataProperties
+                .Where(metadataProerty => !clone
+                    .MetadataProperties
+                    .Any(cloneMetadataProperty => cloneMetadataProperty.Name.EqualsOrdinal(metadataProerty.Name))));
+            return clone;
         }
     }
 

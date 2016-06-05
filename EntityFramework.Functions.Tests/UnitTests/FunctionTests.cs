@@ -52,12 +52,22 @@
         }
 
         [TestMethod]
-        public void TableValuedFunctionTest()
+        public void ComplexTypeTableValuedFunctionTest()
         {
             using (AdventureWorks adventureWorks = new AdventureWorks())
             {
                 IQueryable<ContactInformation> employees = adventureWorks.ufnGetContactInformation(1).Take(2);
                 Assert.IsNotNull(employees.Single());
+            }
+        }
+
+        [TestMethod]
+        public void EntityTypeTableValuedFunctionTest()
+        {
+            using (AdventureWorks adventureWorks = new AdventureWorks())
+            {
+                IQueryable<Person> persons = adventureWorks.ufnGetPersons("a").Take(2);
+                Assert.IsTrue(persons.Any());
             }
         }
 

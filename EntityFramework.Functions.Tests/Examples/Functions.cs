@@ -72,6 +72,16 @@
                 $"[{nameof(this.ufnGetContactInformation)}](@{nameof(personId)})", personIdParameter);
         }
 
+        [TableValuedFunction(nameof(ufnGetPersons), NameSpace, Schema = dbo)]
+        public IQueryable<Person> ufnGetPersons(
+            [Parameter(DbType = "nvarchar", Name = "Name")]string name)
+        {
+            ObjectParameter nameParameter = new ObjectParameter("Name", name);
+
+            return this.ObjectContext().CreateQuery<Person>(
+                $"[{nameof(this.ufnGetPersons)}](@{nameof(name)})", nameParameter);
+        }
+
         // Defines scalar-valued function (composable),
         // which can only be used in LINQ to Entities queries, where its body will never be executed;
         // and cannot be called directly.

@@ -224,31 +224,19 @@ namespace EntityFramework.Functions
             // Build above <Mappings> imperatively.
             if (modelFunction.IsComposableAttribute)
             {
-                FunctionImportMappingComposable mapping = new FunctionImportMappingComposable(
+                model.ConceptualToStoreMapping.AddFunctionImportMapping(new FunctionImportMappingComposable(
                     modelFunction,
                     storeFunction,
                     new FunctionImportResultMapping(),
-                    model.ConceptualToStoreMapping);
-                if (functionAttribute.Type == FunctionType.TableValuedFunction)
-                {
-                    EntityType modelFunctionReturnEntityType = (modelFunction.ReturnParameter.TypeUsage.EdmType as CollectionType)?.TypeUsage.EdmType as EntityType;
-                    if (modelFunctionReturnEntityType != null)
-                    {
-                        // Table-valued function returning entity type is not supported. The following code does not work:
-                        // mapping.ResultMapping.TypeMappings.ToArray().ForEach(typeMapping => mapping.ResultMapping.RemoveTypeMapping(typeMapping));
-                        throw new NotSupportedException($"Entity type {modelFunctionReturnEntityType.FullName} returned by table-valued function {methodInfo.Name} is not supported by Entity Framework code first. Please have the method return complex type. See discussion here for details: https://github.com/Dixin/EntityFramework.Functions/issues/7.");
-                    }
-                }
-                model.ConceptualToStoreMapping.AddFunctionImportMapping(mapping);
+                    model.ConceptualToStoreMapping));
             }
             else
             {
-                FunctionImportMappingNonComposable mapping = new FunctionImportMappingNonComposable(
+                model.ConceptualToStoreMapping.AddFunctionImportMapping(new FunctionImportMappingNonComposable(
                     modelFunction,
                     storeFunction,
                     Enumerable.Empty<FunctionImportResultMapping>(),
-                    model.ConceptualToStoreMapping);
-                model.ConceptualToStoreMapping.AddFunctionImportMapping(mapping);
+                    model.ConceptualToStoreMapping));
             }
         }
 
@@ -486,14 +474,18 @@ namespace EntityFramework.Functions
                 RowType storeReturnParameterRowType;
                 if (modelReturnParameterComplexType != null)
                 {
-                    storeReturnParameterRowType = RowType.Create(modelReturnParameterComplexType.Properties, null);
+                    storeReturnParameterRowType = RowType.Create(
+                        modelReturnParameterComplexType.Properties.Select(property => property.Clone()),
+                        null);
                 }
                 else
                 {
                     EntityType modelReturnParameterEntityType = modelReturnParameterStructuralType as EntityType;
                     if (modelReturnParameterEntityType != null)
                     {
-                        storeReturnParameterRowType = RowType.Create(modelReturnParameterEntityType.Properties, null);
+                        storeReturnParameterRowType = RowType.Create(
+                            modelReturnParameterEntityType.Properties.Select(property => property.Clone()),
+                            null);
                     }
                     else
                     {
@@ -847,28 +839,27 @@ namespace EntityFramework.Functions
                     }).ToArray();
                 }
             }
-            // When table-valued function returning entity type is not supported. the following code does not work:
-            // else if (functionAttribute.Type == FunctionType.TableValuedFunction)
-            // {
-            //    // returnParameterInfo.ParameterType is IQueryable<T>.
-            //    Type returnParameterClrType = returnParameterInfo.ParameterType.GetGenericArguments().Single();
-            //    EntityType returnParameterEntityType = model.GetModelEntityType(returnParameterClrType, methodInfo);
-            //    if (returnParameterEntityType != null)
-            //    {
-            //        EntitySet modelEntitySet = model
-            //            .ConceptualModel
-            //            .Container
-            //            .EntitySets
-            //            .FirstOrDefault(entitySet => entitySet.ElementType == returnParameterEntityType);
-            //        if (modelEntitySet == null)
-            //        {
-            //            throw new NotSupportedException(
-            //                $"{returnParameterInfo.ParameterType.FullName} for method {methodInfo.Name} is not supported in conceptual model as entity set.");
-            //        }
+            else if (functionAttribute.Type == FunctionType.TableValuedFunction)
+            {
+                // returnParameterInfo.ParameterType is IQueryable<T>.
+                Type returnParameterClrType = returnParameterInfo.ParameterType.GetGenericArguments().Single();
+                EntityType returnParameterEntityType = model.GetModelEntityType(returnParameterClrType, methodInfo);
+                if (returnParameterEntityType != null)
+                {
+                    EntitySet modelEntitySet = model
+                        .ConceptualModel
+                        .Container
+                        .EntitySets
+                        .FirstOrDefault(entitySet => entitySet.ElementType == returnParameterEntityType);
+                    if (modelEntitySet == null)
+                    {
+                        throw new NotSupportedException(
+                            $"{returnParameterInfo.ParameterType.FullName} for method {methodInfo.Name} is not supported in conceptual model as entity set.");
+                    }
 
-            //        return new EntitySet[] { modelEntitySet };
-            //    }
-            // }
+                    return new EntitySet[] { modelEntitySet };
+                }
+            }
 
             // Do not return new EntitySet[0], which causes a ArgumentException:
             // The number of entity sets should match the number of return parameters.
