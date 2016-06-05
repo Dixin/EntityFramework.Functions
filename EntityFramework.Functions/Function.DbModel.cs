@@ -100,6 +100,19 @@ namespace EntityFramework.Functions
         </Function>
         <EntityContainer Name="CodeFirstDatabase">
         </EntityContainer>
+        <Function Name="ufnGetPersons" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+                <Property Name="Title" Type="nvarchar" MaxLength="8" />
+                <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
       </Schema>
     </edmx:StorageModels>
             */
@@ -159,6 +172,9 @@ namespace EntityFramework.Functions
             <Parameter Name="ProductID" Mode="In" Type="Int32" />
             <Parameter Name="OrderDate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="ufnGetPersons" IsComposable="true" EntitySet="Persons" ReturnType="Collection(Model.Person)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -217,6 +233,7 @@ namespace EntityFramework.Functions
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ufnGetProductStandardCost" FunctionName="AdventureWorks.ufnGetProductStandardCost" />
+          <FunctionImportMapping FunctionImportName="ufnGetPersons" FunctionName="Model.Store.ufnGetPersons" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
