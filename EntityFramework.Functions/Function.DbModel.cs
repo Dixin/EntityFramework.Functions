@@ -492,7 +492,8 @@ namespace EntityFramework.Functions
                 if (modelReturnParameterComplexType != null)
                 {
                     storeReturnParameterRowType = RowType.Create(
-                        modelReturnParameterComplexType.Properties.Select(property => property.Clone()),
+                        modelReturnParameterComplexType.Properties.Select(property => 
+                            EdmProperty.Create(property.Name, model.ProviderManifest.GetStoreType(property.TypeUsage))),
                         null);
                 }
                 else
