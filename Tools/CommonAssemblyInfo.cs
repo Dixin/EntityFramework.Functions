@@ -6,5 +6,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("EntityFramework.Functions")]
 [assembly: AssemblyCopyright("Dixin Yan https://weblogs.asp.net/dixin")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyFileVersion("1.3.0.0")]
+[assembly: AssemblyVersion("1.3.1.0")]
+[assembly: AssemblyFileVersion("1.3.1.0")]
