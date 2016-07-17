@@ -39,11 +39,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -64,13 +64,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Examples\AdventureWorks.AggregateFunctions.cs" />
-    <Compile Include="Examples\AdventureWorks.ComplexTypes.cs" />
-    <Compile Include="Examples\AdventureWorks.Database.cs" />
-    <Compile Include="Examples\AdventureWorks.Functions.cs" />
-    <Compile Include="Examples\AdventureWorks.Tables.cs" />
+    <Compile Include="..\Tools\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Examples\AggregateFunctions.cs" />
+    <Compile Include="Examples\ComplexTypes.cs" />
+    <Compile Include="Examples\Database.cs" />
+    <Compile Include="Examples\Functions.cs" />
+    <Compile Include="Examples\Tables.cs" />
     <Compile Include="Examples\ModelDefinedFunctions.cs" />
-    <Compile Include="UnitTests\AdventureWorksTests.cs" />
+    <Compile Include="UnitTests\FunctionTests.cs" />
     <Compile Include="Examples\BuiltInFunctions.cs" />
     <Compile Include="Examples\NiladicFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +96,10 @@
     <ProjectReference Include="..\EntityFramework.Functions.Net46\EntityFramework.Functions.Net46.csproj">
       <Project>{1f4a3422-908a-4ea0-98d8-b3ad8f402faf}</Project>
       <Name>EntityFramework.Functions.Net46</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFramework.Functions.Tests.Library\EntityFramework.Functions.Tests.Library.csproj">
+      <Project>{27afffb0-bc81-40ea-9d93-55523e1aff06}</Project>
+      <Name>EntityFramework.Functions.Tests.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

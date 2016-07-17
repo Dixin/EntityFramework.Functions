@@ -1,6 +1,8 @@
 ﻿namespace EntityFramework.Functions.Tests.Examples
 {
-	public static class ModelDefinedFunctions
+    using EntityFramework.Functions.Tests.Library.Examples;
+
+    public static class ModelDefinedFunctions
 	{
 		[ModelDefinedFunction(nameof(FormatName), "EntityFramework.Functions.Tests.Examples",
             @"(CASE 

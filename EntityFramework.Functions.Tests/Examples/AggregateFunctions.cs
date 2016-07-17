@@ -4,7 +4,7 @@
 
     public static class AdventureWorksFunctions
     {
-        // Defines aggregate function, which must have one singele IEnumerable<T> or IQueryable<T> parameter.
+        // Defines aggregate function, which must have one single IEnumerable<T> or IQueryable<T> parameter.
         // It can only be used in LINQ to Entities queries, where its body will never be executed;
         // and cannot be called directly.
         [AggregateFunction(nameof(Concat), Schema = AdventureWorks.dbo)]

@@ -71,6 +71,9 @@
     <Compile Include="..\EntityFramework.Functions\Utilities.cs">
       <Link>Utilities.cs</Link>
     </Compile>
+    <Compile Include="..\Tools\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

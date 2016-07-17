@@ -7,6 +7,7 @@
     using System.Linq;
 
     using EntityFramework.Functions.Tests.Examples;
+    using EntityFramework.Functions.Tests.Library.Examples;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -51,7 +52,7 @@
         }
 
         [TestMethod]
-        public void TableValuedFunctionTest()
+        public void ComplexTypeTableValuedFunctionTest()
         {
             using (AdventureWorks adventureWorks = new AdventureWorks())
             {
@@ -61,12 +62,22 @@
         }
 
         [TestMethod]
+        public void EntityTypeTableValuedFunctionTest()
+        {
+            using (AdventureWorks adventureWorks = new AdventureWorks())
+            {
+                IQueryable<Person> persons = adventureWorks.ufnGetPersons("a").Take(2);
+                Assert.IsTrue(persons.Any());
+            }
+        }
+
+        [TestMethod]
         public void ComposedTableValuedFunctionInLinqTest()
         {
             using (AdventureWorks database = new AdventureWorks())
             {
                 var employeesWithContactInformation =
-                    from employee in database.People
+                    from employee in database.Persons
                     from contactInfo in database.ufnGetContactInformation(employee.BusinessEntityID)
                     select new {employee.FirstName, contactInfo.JobTitle};
                 var employeeWithContactInformation = employeesWithContactInformation.Take(1).ToList();
@@ -210,7 +221,7 @@
         {
             using (AdventureWorks database = new AdventureWorks())
             {
-                var employees = from employee in database.People
+                var employees = from employee in database.Persons
                                 where employee.Title != null
                                 let formatted = employee.FormatName()
                                 select new

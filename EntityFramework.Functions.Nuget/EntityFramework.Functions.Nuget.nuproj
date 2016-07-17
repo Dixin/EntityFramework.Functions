@@ -24,15 +24,15 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>EntityFramework.Functions</Id>
-    <Version>1.2.0</Version>
+    <Version>1.3.1</Version>
     <Title>EntityFramework Code First Functions</Title>
     <Authors>Dixin Yan</Authors>
     <Owners>Dixin Yan</Owners>
     <Summary>EntityFramework.Functions library implements Entity Framework code first support for stored procedures, table-valued functions, scalar-valued functions (composable or non-composable), aggregate functions, built-in functions, and niladic function.</Summary>
     <Description>EntityFramework.Functions library implements Entity Framework code first support for 
-- Stored procedures (single result type, multiple result types, output parameter), 
-- Table-valued functions, 
-- Scalar-valued functions (composable or non-composable), 
+- Stored procedures (with single result type, multiple result types, output parameter), 
+- Table-valued functions (returning entity type, complex type), 
+- Scalar-valued functions (composable, non-composable), 
 - Aggregate functions, 
 - Built-in functions, 
 - Niladic functions,

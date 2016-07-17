@@ -5,9 +5,12 @@
     using System.Data.Entity.Core.Objects;
     using System.Linq;
 
+    using EntityFramework.Functions.Tests.Library.Examples;
+
     public partial class AdventureWorks
     {
         public const string dbo = nameof(dbo);
+
         public const string NameSpace = nameof(AdventureWorks);
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -67,6 +70,16 @@
 
             return this.ObjectContext().CreateQuery<ContactInformation>(
                 $"[{nameof(this.ufnGetContactInformation)}](@{nameof(personId)})", personIdParameter);
+        }
+
+        [TableValuedFunction(nameof(ufnGetPersons), NameSpace, Schema = dbo)]
+        public IQueryable<Person> ufnGetPersons(
+            [Parameter(DbType = "nvarchar", Name = "Name")]string name)
+        {
+            ObjectParameter nameParameter = new ObjectParameter("Name", name);
+
+            return this.ObjectContext().CreateQuery<Person>(
+                $"[{nameof(this.ufnGetPersons)}](@{nameof(name)})", nameParameter);
         }
 
         // Defines scalar-valued function (composable),

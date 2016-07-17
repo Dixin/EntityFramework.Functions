@@ -9,7 +9,13 @@
             <li>output parameter</li>
         </ul>
     </li>
-    <li>Table-valued functions</li>
+    <li>
+        Table-valued functions, returning
+        <ul>
+            <li>entity type</li>
+            <li>complex type</li>
+        </ul>
+    </li>
     <li>
         Scalar-valued functions
         <ul>
