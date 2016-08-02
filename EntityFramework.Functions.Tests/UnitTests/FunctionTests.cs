@@ -235,5 +235,17 @@
                 Assert.AreEqual(employeeData.employee.FormatName(), employeeData.formatted);
             }
         }
+
+        [TestMethod]
+        public void ModelDefinedFunctionInLinqTest2()
+        {
+            using (AdventureWorks database = new AdventureWorks())
+            {
+                var result = (from employee in database.Persons
+                                let formatted = "23.00".ParseDouble()
+                                select formatted).FirstOrDefault();
+                Assert.AreEqual(23.00, result);
+            }
+        }
     }
 }

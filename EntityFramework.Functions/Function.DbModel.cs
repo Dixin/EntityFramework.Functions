@@ -492,7 +492,7 @@ namespace EntityFramework.Functions
                 if (modelReturnParameterComplexType != null)
                 {
                     storeReturnParameterRowType = RowType.Create(
-                        modelReturnParameterComplexType.Properties.Select(property => 
+                        modelReturnParameterComplexType.Properties.Select(property =>
                             EdmProperty.Create(property.Name, model.ProviderManifest.GetStoreType(property.TypeUsage))),
                         null);
                 }
@@ -557,12 +557,34 @@ namespace EntityFramework.Functions
             this DbModel model, MethodInfo methodInfo)
         {
             ParameterInfo[] parameters = methodInfo.GetParameters().ToArray();
-            return parameters
-                .Select((parameterInfo) => FunctionParameter.Create(
-                    parameterInfo.GetCustomAttribute<ParameterAttribute>()?.Name ?? parameterInfo.Name,
-                    model.GetModelStructualType(parameterInfo.ParameterType, methodInfo),
-                    ParameterMode.In))
-                .ToArray();
+            return parameters.Select(
+                (parameterInfo) =>
+                {
+                    EdmType type = model.GetModelPrimitiveType(parameterInfo.ParameterType, methodInfo);
+                    if (type == null)
+                    {
+                        type = model.GetModelComplexType(parameterInfo.ParameterType, methodInfo);
+                        if (type == null)
+                        {
+                            type = model.GetModelEntityType(parameterInfo.ParameterType, methodInfo);
+                            if (type == null)
+                            {
+                                type = model.GetModelStructualType(parameterInfo.ParameterType, methodInfo);
+                                if (type == null)
+                                {
+                                    throw new NotSupportedException(
+                                        $"{parameterInfo.ParameterType.FullName} for method {methodInfo.Name} is "
+                                        + "not supported in conceptual model");
+                                }
+                            }
+                        }
+                    }
+
+                    return FunctionParameter.Create(parameterInfo.GetCustomAttribute<ParameterAttribute>()?.Name ?? parameterInfo.Name,
+                                                    type,
+                                                    ParameterMode.In);
+                }
+                ).ToArray();
         }
 
         private static IList<FunctionParameter> GetModelReturnParameters(
@@ -694,11 +716,11 @@ namespace EntityFramework.Functions
             PrimitiveType modelPrimitiveType = PrimitiveType
                 .GetEdmPrimitiveTypes()
                 .FirstOrDefault(primitiveType => primitiveType.ClrEquivalentType == clrType);
-            if (modelPrimitiveType == null)
-            {
-                throw new NotSupportedException(
-                    $"Type {nameof(clrType.FullName)} in method {methodInfo.Name} is not supported in conceptual model.");
-            }
+            //if (modelPrimitiveType == null)
+            //{
+            //    throw new NotSupportedException(
+            //        $"Type {nameof(clrType.FullName)} in method {methodInfo.Name} is not supported in conceptual model.");
+            //}
 
             return modelPrimitiveType;
         }
@@ -717,8 +739,10 @@ namespace EntityFramework.Functions
                 return complexType;
             }
 
-            throw new NotSupportedException(
-                $"{clrType.FullName} for method {methodInfo.Name} is not supported in conceptual model as a structural type.");
+            return default(StructuralType);
+
+            //throw new NotSupportedException(
+            //    $"{clrType.FullName} for method {methodInfo.Name} is not supported in conceptual model as a structural type.");
         }
 
         private static EntityType GetModelEntityType(this DbModel model, Type clrType, MethodInfo methodInfo)
