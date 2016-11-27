@@ -123,6 +123,14 @@ namespace EntityFramework.Functions
                 functionName = methodInfo.Name;
             }
 
+            //Fix (rodro75): functions could be added several times here in case of methods overloading, 
+            //which is necessary in some scenarios, but we should really add the metadata just once or EF
+            //would complain when compiling the model.
+            //Not shure about "Ordinal" equality though.. shouldn't it be OrdinalIgnoreCase instead?
+            //As far as I know function names are not case-sensitive in SQL Server.
+            if (model.StoreModel.Functions.Any(x => x.Name.EqualsOrdinal(functionName)))
+                return;
+
             EdmFunction storeFunction = EdmFunction.Create(
                 functionName,
                 FunctionAttribute.CodeFirstDatabaseSchema, // model.StoreModel.Container.Name is always "CodeFirstDatabaseSchema".
