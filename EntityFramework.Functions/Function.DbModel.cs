@@ -718,7 +718,7 @@ namespace EntityFramework.Functions
             }
 
             throw new NotSupportedException(
-                $"{clrType.FullName} for method {methodInfo.Name} is not supported in conceptual model as a structural type.");
+                $"{clrType.FullName} for method {methodInfo.Name} is not supported in conceptual model as a structural type.  This can be caused by a failure to register this type as complex. For more information, see https://msdn.microsoft.com/en-us/library/gg679474(v=VS.103).aspx"){ HelpLink = "https://msdn.microsoft.com/en-us/library/gg679474(v=VS.103).aspx" };
         }
 
         private static EntityType GetModelEntityType(this DbModel model, Type clrType, MethodInfo methodInfo)
