@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 namespace EntityFramework.Functions
 {
     using System;
@@ -500,7 +498,7 @@ namespace EntityFramework.Functions
                 if (modelReturnParameterComplexType != null)
                 {
                     storeReturnParameterRowType = RowType.Create(
-                        modelReturnParameterComplexType.Properties.Select(property => 
+                        modelReturnParameterComplexType.Properties.Select(property =>
                             EdmProperty.Create(property.Name, model.ProviderManifest.GetStoreType(property.TypeUsage))),
                         null);
                 }
@@ -726,7 +724,10 @@ namespace EntityFramework.Functions
             }
 
             throw new NotSupportedException(
-                $"{clrType.FullName} for method {methodInfo.Name} is not supported in conceptual model as a structural type.  This can be caused by a failure to register this type as complex. For more information, see https://msdn.microsoft.com/en-us/library/gg679474(v=VS.103).aspx"){ HelpLink = "https://msdn.microsoft.com/en-us/library/gg679474(v=VS.103).aspx" };
+                $"{clrType.FullName} for method {methodInfo.Name} is not supported in conceptual model as a structural type.  This can be caused by a failure to register this type as complex. For more information, see https://msdn.microsoft.com/en-us/library/gg679474.aspx")
+            {
+                HelpLink = "https://msdn.microsoft.com/en-us/library/gg679474.aspx"
+            };
         }
 
         private static EntityType GetModelEntityType(this DbModel model, Type clrType, MethodInfo methodInfo)

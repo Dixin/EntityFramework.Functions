@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace EntityFramework.Functions.Tests.Examples
+﻿namespace EntityFramework.Functions.Tests.Examples
 {
+    using System;
+
     public static class BuiltInFunctions
     {
         [BuiltInFunction("LEFT")]
