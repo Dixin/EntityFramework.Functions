@@ -24,7 +24,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>EntityFramework.Functions</Id>
-    <Version>1.3.1</Version>
+    <Version>1.4.0</Version>
     <Title>EntityFramework Code First Functions</Title>
     <Authors>Dixin Yan</Authors>
     <Owners>Dixin Yan</Owners>
