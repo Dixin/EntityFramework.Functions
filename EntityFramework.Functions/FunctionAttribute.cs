@@ -27,7 +27,7 @@
     [AttributeUsage(AttributeTargets.Method)]
     public class FunctionAttribute : DbFunctionAttribute
     {
-        // The hard coded schema name "CodeFirstDatabaseSchema" is used by Entity Frameork.
+        // The hard coded schema name "CodeFirstDatabaseSchema" is used by Entity Framework.
         public const string CodeFirstDatabaseSchema = nameof(CodeFirstDatabaseSchema);
 
         /// <summary>
@@ -38,8 +38,8 @@
         /// <param name="name">The name of the function.</param>
         /// <param name="namespaceName">
         /// If <paramref name="type"/> is <see cref="FunctionType.TableValuedFunction"/>, this must be the name of the DbContext.
-        /// If <paramref name="type"/> is <see cref="FunctionType.ModelDefinedFunction"/>, this must be the namespace (not the name) of the the DbContext.
-        /// For other function types, do not set this paramater for other function types.
+        /// If <paramref name="type"/> is <see cref="FunctionType.ModelDefinedFunction"/>, this must be the namespace (not the name) of the DbContext.
+        /// For other function types, do not set this parameter for other function types.
         /// </param>
         public FunctionAttribute(FunctionType type, string name, string namespaceName = CodeFirstDatabaseSchema)
             : base(namespaceName, name)
@@ -174,7 +174,7 @@
         /// <param name="name">The name of the method this attribute is applied to.</param>
         /// <param name="namespaceName">The namespace (not the name) of the <see cref="DbContext"/> class.</param>
         /// <param name="entitySql">
-        /// The EntitySQL implementation of the function. EntitySQL is a varient of SQL which can be translated by a provider into a store query.
+        /// The EntitySQL implementation of the function. EntitySQL is a variant of SQL which can be translated by a provider into a store query.
         /// Documentation for EntitySQL is here: https://msdn.microsoft.com/en-us/library/bb387145(v=vs.110).aspx 
         /// </param>
         public ModelDefinedFunctionAttribute(string name, string namespaceName, string entitySql) 

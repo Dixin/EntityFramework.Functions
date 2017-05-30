@@ -79,7 +79,7 @@
                 var employeesWithContactInformation =
                     from employee in database.Persons
                     from contactInfo in database.ufnGetContactInformation(employee.BusinessEntityID)
-                    select new {employee.FirstName, contactInfo.JobTitle};
+                    select new { employee.FirstName, contactInfo.JobTitle };
                 var employeeWithContactInformation = employeesWithContactInformation.Take(1).ToList();
                 Assert.AreEqual(employeeWithContactInformation.Count, 1);
             }
@@ -233,6 +233,20 @@
                 Assert.IsNotNull(employeeData);
                 Assert.IsNotNull(employeeData.formatted);
                 Assert.AreEqual(employeeData.employee.FormatName(), employeeData.formatted);
+            }
+
+            using (AdventureWorks database = new AdventureWorks())
+            {
+                var employees = from employee in database.Persons
+                                where employee.Title != null
+                                select new
+                                {
+                                    Decimal = employee.ParseDecimal(),
+                                    Int32 = employee.BusinessEntityID
+                                };
+                var employeeData = employees.Take(1).ToList().FirstOrDefault();
+                Assert.IsNotNull(employeeData);
+                Assert.AreEqual(employeeData.Decimal, Convert.ToInt32(employeeData.Int32));
             }
         }
     }
