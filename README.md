@@ -1,4 +1,5 @@
 <h1>EntityFramework.Functions</h1>
+<a fref="https://ci.appveyor.com/project/Dixin/entityframework-functions"><img src="https://ci.appveyor.com/api/projects/status/r4x7jaav6ldw68fa?svg=true" alt="Build status" /></a>
 <p>EntityFramework.Functions library implements <a href="https://en.wikipedia.org/wiki/Entity_Framework" target="_blank">Entity Framework</a> code first support for:</p>
 <ul>
     <li>
