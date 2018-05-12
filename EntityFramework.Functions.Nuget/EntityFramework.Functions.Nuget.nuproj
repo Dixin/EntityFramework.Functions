@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityFramework.Functions.Net45\EntityFramework.Functions.Net45.csproj" />
     <ProjectReference Include="..\EntityFramework.Functions.Net46\EntityFramework.Functions.Net46.csproj" />
+    <ProjectReference Include="..\EntityFramework.Functions.Net47\EntityFramework.Functions.Net47.csproj" />
     <ProjectReference Include="..\EntityFramework.Functions\EntityFramework.Functions.csproj" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -24,7 +25,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>EntityFramework.Functions</Id>
-    <Version>1.4.0</Version>
+    <Version>1.4.1</Version>
     <Title>EntityFramework Code First Functions</Title>
     <Authors>Dixin Yan</Authors>
     <Owners>Dixin Yan</Owners>
@@ -48,7 +49,7 @@ For more information, see:
 - Source code: https://github.com/Dixin/EntityFramework.Functions
 - Nuget package: https://www.nuget.org/packages/EntityFramework.Functions
 
-Thanks for the contribution of SteveRuble.
+Thanks for the contribution of SteveRuble, rodro75, WillSullivan, ChristosMylonas.
 </Description>
     <ReleaseNotes>
     </ReleaseNotes>

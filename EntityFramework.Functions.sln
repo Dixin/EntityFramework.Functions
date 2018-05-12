@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions", "EntityFramework.Functions\EntityFramework.Functions.csproj", "{20128F9B-B68D-4E51-A0E9-67EB1E7B9402}"
 EndProject
@@ -37,6 +37,8 @@ Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "EntityFramework.Functions.N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Tests.Library", "EntityFramework.Functions.Tests.Library\EntityFramework.Functions.Tests.Library.csproj", "{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Net47", "EntityFramework.Functions.Net47\EntityFramework.Functions.Net47.csproj", "{C9FE5455-28E0-4B20-B57E-06C1A6914631}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,8 +69,15 @@ Global
 		{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9FE5455-28E0-4B20-B57E-06C1A6914631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9FE5455-28E0-4B20-B57E-06C1A6914631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9FE5455-28E0-4B20-B57E-06C1A6914631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9FE5455-28E0-4B20-B57E-06C1A6914631}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7FC9BA69-D019-4112-8082-08591C9F8781}
 	EndGlobalSection
 EndGlobal
