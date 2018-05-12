@@ -136,6 +136,7 @@ namespace EntityFramework.Functions
                 new EdmFunctionPayload()
                 {
                     Schema = functionAttribute.Schema,
+                    StoreFunctionName = functionAttribute.StoreFunctionName,
                     IsAggregate = functionAttribute.IsAggregate,
                     IsBuiltIn = functionAttribute.IsBuiltIn,
                     IsNiladic = functionAttribute.IsNiladic,

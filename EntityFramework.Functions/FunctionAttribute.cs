@@ -124,6 +124,8 @@
         public string Schema { get; set; }
 
         public ParameterTypeSemantics ParameterTypeSemantics { get; set; } = ParameterTypeSemantics.AllowImplicitConversion;
+
+        public string StoreFunctionName { get; set; }
     }
 
     public class StoredProcedureAttribute : FunctionAttribute
