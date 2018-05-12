@@ -119,3 +119,13 @@ SELECT
         FROM [Person].[Person] AS [Extent1]
         WHERE [Extent1].[Title] IS NOT NULL
     )  AS [Limit1]
+
+SELECT 
+    [Limit1].[BusinessEntityID] AS [BusinessEntityID], 
+    [Limit1].[C1] AS [C1]
+    FROM ( SELECT TOP (1) 
+        [Extent1].[BusinessEntityID] AS [BusinessEntityID], 
+         CAST( [Extent1].[BusinessEntityID] AS decimal(20,8)) AS [C1]
+        FROM [Person].[Person] AS [Extent1]
+        WHERE [Extent1].[Title] IS NOT NULL
+    )  AS [Limit1]
