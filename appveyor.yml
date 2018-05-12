@@ -14,7 +14,7 @@ assembly_info:
   assembly_informational_version: '{version}'
 environment:
   EnableNuGetPackageRestore: true
-services: mssql2017
+services: mssql2014
 install:
 - ps: 
 before_build:
@@ -24,7 +24,7 @@ build:
   verbosity: detailed
 before_test:
 - ps: >-
-    $server = "(local)\SQL2017"
+    $server = "(local)\SQL2014"
 
     $database = "AdventureWorks"
 
