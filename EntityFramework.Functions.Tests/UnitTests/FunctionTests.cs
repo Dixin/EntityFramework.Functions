@@ -208,6 +208,8 @@
                     .First();
                 Assert.IsNotNull(firstCategory);
                 Assert.IsNotNull(firstCategory.CurrentTimestamp);
+                Trace.WriteLine(DateTime.Now.Ticks);
+                Trace.WriteLine(firstCategory.CurrentTimestamp.Value.Ticks);
                 Assert.IsTrue(DateTime.Now >= firstCategory.CurrentTimestamp);
                 Assert.AreEqual("dbo", firstCategory.CurrentUser, true, CultureInfo.InvariantCulture);
                 Assert.AreEqual("dbo", firstCategory.SessionUser, true, CultureInfo.InvariantCulture);
