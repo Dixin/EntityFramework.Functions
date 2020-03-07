@@ -26,8 +26,8 @@ namespace EntityFramework.Functions.Tests.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=..\\..\\..\\Data\\AdventureWorks_" +
-            "Data.mdf;Integrated Security=True;Connect Timeout=30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=..\\..\\..\\..\\Data\\AdventureWor" +
+            "ks_Data.mdf;Integrated Security=True;Connect Timeout=30")]
         public string AdventureWorksConnectionString {
             get {
                 return ((string)(this["AdventureWorksConnectionString"]));

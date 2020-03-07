@@ -3,6 +3,7 @@
     using System.Data.Entity;
 
     using EntityFramework.Functions.Tests.Properties;
+    using EntityFramework.Functions.Tests.UnitTests;
 
     public partial class AdventureWorks : DbContext
     {
@@ -13,7 +14,7 @@
         }
 
         public AdventureWorks()
-            : base(Settings.Default.AdventureWorksConnectionString)
+            : base(Settings.Default.AdventureWorksConnectionString.ResolveDatabasePath())
         {
         }
     }

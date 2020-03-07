@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>EntityFramework.Functions.Tests.Library</AssemblyName>
+    <RootNamespace>EntityFramework.Functions.Tests.Library</RootNamespace>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Tools\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\EntityFramework.Functions.Tests.Library\Examples\ComplexTypes.cs" Link="Examples\ComplexTypes.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests.Library\Examples\Tables.cs" Link="Examples\Tables.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Examples\" />
+  </ItemGroup>
+
+</Project>

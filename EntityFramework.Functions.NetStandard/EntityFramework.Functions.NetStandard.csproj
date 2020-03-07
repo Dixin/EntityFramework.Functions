@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Tools\Key.snk</AssemblyOriginatorKeyFile>
+    <Version>1.4.0</Version>
+    <Authors>Dixin Yan</Authors>
+    <Company>Dixin Yan</Company>
+    <PackageId>EntityFramework.Functions</PackageId>
+    <Product>EntityFramework.Functions</Product>
+    <Description>EntityFramework.Functions library implements Entity Framework code first support for stored procedures, table-valued functions, scalar-valued functions (composable or non-composable), aggregate functions, built-in functions, and niladic function.</Description>
+    <AssemblyName>EntityFramework.Functions</AssemblyName>
+    <RootNamespace>EntityFramework.Functions</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\EntityFramework.Functions\DbContextExtensions.cs" Link="DbContextExtensions.cs" />
+    <Compile Include="..\EntityFramework.Functions\Function.cs" Link="Function.cs" />
+    <Compile Include="..\EntityFramework.Functions\Function.DbModel.cs" Link="Function.DbModel.cs" />
+    <Compile Include="..\EntityFramework.Functions\Function.DbModelBuilder.cs" Link="Function.DbModelBuilder.cs" />
+    <Compile Include="..\EntityFramework.Functions\Function.MethodInfo.cs" Link="Function.MethodInfo.cs" />
+    <Compile Include="..\EntityFramework.Functions\FunctionAttribute.cs" Link="FunctionAttribute.cs" />
+    <Compile Include="..\EntityFramework.Functions\FunctionConvention.cs" Link="FunctionConvention.cs" />
+    <Compile Include="..\EntityFramework.Functions\Utilities.cs" Link="Utilities.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.0" />
+  </ItemGroup>
+
+</Project>

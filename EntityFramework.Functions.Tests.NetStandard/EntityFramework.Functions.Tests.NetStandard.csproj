@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <AssemblyName>EntityFramework.Functions.Tests</AssemblyName>
+
+    <RootNamespace>EntityFramework.Functions.Tests</RootNamespace>
+
+    <SignAssembly>true</SignAssembly>
+
+    <AssemblyOriginatorKeyFile>..\Tools\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\EntityFramework.Functions.Tests\Examples\AggregateFunctions.cs" Link="Examples\AggregateFunctions.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\Examples\BuiltInFunctions.cs" Link="Examples\BuiltInFunctions.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\Examples\ComplexTypes.cs" Link="Examples\ComplexTypes.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\Examples\Database.cs" Link="Examples\Database.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\Examples\Functions.cs" Link="Examples\Functions.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\Examples\ModelDefinedFunctions.cs" Link="Examples\ModelDefinedFunctions.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\Examples\NiladicFunctions.cs" Link="Examples\NiladicFunctions.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\Examples\Tables.cs" Link="Examples\Tables.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\UnitTests\FunctionTests.cs" Link="UnitTests\FunctionTests.cs" />
+    <Compile Include="..\EntityFramework.Functions.Tests\UnitTests\TestAssembly.cs" Link="UnitTests\TestAssembly.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
+    <PackageReference Include="coverlet.collector" Version="1.0.1" />
+    <PackageReference Include="System.Interactive" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Examples\" />
+    <Folder Include="UnitTests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFramework.Functions.NetStandard\EntityFramework.Functions.NetStandard.csproj" />
+    <ProjectReference Include="..\EntityFramework.Functions.Tests.Library.NetStandard\EntityFramework.Functions.Tests.Library.NetStandard.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
