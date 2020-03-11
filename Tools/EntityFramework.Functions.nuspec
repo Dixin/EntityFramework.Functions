@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>EntityFramework.Functions</id>
+    <version>1.5.0</version>
+    <title>EntityFramework Code First Functions</title>
+    <authors>Dixin Yan</authors>
+    <owners>Dixin Yan</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/Dixin/EntityFramework.Functions</projectUrl>
+    <description>EntityFramework.Functions library implements Entity Framework code first support for 
+- Stored procedures (with single result type, multiple result types, output parameter), 
+- Table-valued functions (returning entity type, complex type), 
+- Scalar-valued functions (composable, non-composable), 
+- Aggregate functions, 
+- Built-in functions, 
+- Niladic functions,
+- Model defined functions.
+
+EntityFramework.Functions library works on .NET Standard with Entity Framework 6.4.0. It also works on .NET 4.0, .NET 4.5, .NET 4.6, .NET 4.7, .NET 4.8 with Entity Framework 6.1.0 and later.
+
+It can be installed through Nuget:
+- dotnet add package EntityFramework.Functions
+Or:
+- Install-Package EntityFramework.Functions -DependencyVersion Highest
+
+For more information, see:
+- Document (APIs and examples): https://weblogs.asp.net/Dixin/EntityFramework.Functions
+- Source code: https://github.com/Dixin/EntityFramework.Functions
+- Nuget package: https://www.nuget.org/packages/EntityFramework.Functions</description>
+    <summary>EntityFramework.Functions library implements Entity Framework code first support for stored procedures, table-valued functions, scalar-valued functions (composable or non-composable), aggregate functions, built-in functions, and niladic function.</summary>
+    <copyright>Dixin Yan https://weblogs.asp.net/dixin</copyright>
+    <tags>EF Database Data O/RM ADO.NET EntityFramework Entity Framework CodeFirst Code First Functions StoredProcedures Stored Procedures table-valued tablevalued scalar-valued scalarvalued composable non-composable noncomposable aggregate built-in niladic</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="EntityFramework" version="6.4.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="EntityFramework" version="6.1.0" />
+      </group>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="EntityFramework" version="6.1.0" />
+      </group>
+      <group targetFramework=".NETFramework4.6">
+        <dependency id="EntityFramework" version="6.1.0" />
+      </group>
+      <group targetFramework=".NETFramework4.7">
+        <dependency id="EntityFramework" version="6.1.0" />
+      </group>
+      <group targetFramework=".NETFramework4.8">
+        <dependency id="EntityFramework" version="6.1.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\EntityFramework.Functions.Net48\bin\Release\EntityFramework.Functions.dll" target="lib\net40\EntityFramework.Functions.dll" />
+    <file src="..\EntityFramework.Functions.Net48\bin\Release\EntityFramework.Functions.dll" target="lib\net45\EntityFramework.Functions.dll" />
+    <file src="..\EntityFramework.Functions.Net48\bin\Release\EntityFramework.Functions.dll" target="lib\net46\EntityFramework.Functions.dll" />
+    <file src="..\EntityFramework.Functions.Net48\bin\Release\EntityFramework.Functions.dll" target="lib\net47\EntityFramework.Functions.dll" />
+    <file src="..\EntityFramework.Functions.Net48\bin\Release\EntityFramework.Functions.dll" target="lib\net48\EntityFramework.Functions.dll" />
+    <file src="..\EntityFramework.Functions.NetStandard\bin\Release\netstandard2.1\EntityFramework.Functions.dll" target="lib\netstandard2.1\EntityFramework.Functions.dll" />
+  </files>
+</package>

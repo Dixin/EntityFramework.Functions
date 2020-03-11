@@ -7,8 +7,8 @@
     <ProjectGuid>{67C1EDBE-21D0-4AB7-83F9-A51F7128ACFF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EntityFramework.Functions.Net48</RootNamespace>
-    <AssemblyName>EntityFramework.Functions.Net48</AssemblyName>
+    <RootNamespace>EntityFramework.Functions</RootNamespace>
+    <AssemblyName>EntityFramework.Functions</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,59 +31,59 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-      <SignAssembly>true</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-      <AssemblyOriginatorKeyFile>..\Tools\Key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Tools\Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-      <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-          <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
-          <Private>True</Private>
-      </Reference>
-      <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-          <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-          <Private>True</Private>
-      </Reference>
-      <Reference Include="System" />
-      <Reference Include="System.ComponentModel.DataAnnotations" />
-      <Reference Include="System.Core" />
-      <Reference Include="System.Data" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-      <Compile Include="..\EntityFramework.Functions\AssemblyInfo.cs">
-          <Link>AssemblyInfo.cs</Link>
-      </Compile>
-      <Compile Include="..\EntityFramework.Functions\DbContextExtensions.cs">
-          <Link>DbContextExtensions.cs</Link>
-      </Compile>
-      <Compile Include="..\EntityFramework.Functions\Function.cs">
-          <Link>Function.cs</Link>
-      </Compile>
-      <Compile Include="..\EntityFramework.Functions\Function.DbModel.cs">
-          <Link>Function.DbModel.cs</Link>
-      </Compile>
-      <Compile Include="..\EntityFramework.Functions\Function.DbModelBuilder.cs">
-          <Link>Function.DbModelBuilder.cs</Link>
-      </Compile>
-      <Compile Include="..\EntityFramework.Functions\Function.MethodInfo.cs">
-          <Link>Function.MethodInfo.cs</Link>
-      </Compile>
-      <Compile Include="..\EntityFramework.Functions\FunctionAttribute.cs">
-          <Link>FunctionAttribute.cs</Link>
-      </Compile>
-      <Compile Include="..\EntityFramework.Functions\FunctionConvention.cs">
-          <Link>FunctionConvention.cs</Link>
-      </Compile>
-      <Compile Include="..\EntityFramework.Functions\Utilities.cs">
-          <Link>Utilities.cs</Link>
-      </Compile>
-      <Compile Include="..\Tools\CommonAssemblyInfo.cs">
-          <Link>CommonAssemblyInfo.cs</Link>
-      </Compile>
+    <Compile Include="..\EntityFramework.Functions\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.Functions\DbContextExtensions.cs">
+      <Link>DbContextExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.Functions\Function.cs">
+      <Link>Function.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.Functions\Function.DbModel.cs">
+      <Link>Function.DbModel.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.Functions\Function.DbModelBuilder.cs">
+      <Link>Function.DbModelBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.Functions\Function.MethodInfo.cs">
+      <Link>Function.MethodInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.Functions\FunctionAttribute.cs">
+      <Link>FunctionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.Functions\FunctionConvention.cs">
+      <Link>FunctionConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.Functions\Utilities.cs">
+      <Link>Utilities.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-      <Folder Include="Properties\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

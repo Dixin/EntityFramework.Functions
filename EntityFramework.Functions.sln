@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{2DF3286B
 	ProjectSection(SolutionItems) = preProject
 		Tools\CodeAnalysisDictionary.xml = Tools\CodeAnalysisDictionary.xml
 		Tools\CommonAssemblyInfo.cs = Tools\CommonAssemblyInfo.cs
+		Tools\EntityFramework.Functions.nuspec = Tools\EntityFramework.Functions.nuspec
 		Tools\Key.snk = Tools\Key.snk
 		Tools\TargetFrameworkVersion.prop = Tools\TargetFrameworkVersion.prop
 	EndProjectSection

@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Tools\Key.snk</AssemblyOriginatorKeyFile>
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
     <Authors>Dixin Yan</Authors>
     <Company>Dixin Yan</Company>
     <PackageId>EntityFramework.Functions</PackageId>
@@ -12,6 +12,12 @@
     <Description>EntityFramework.Functions library implements Entity Framework code first support for stored procedures, table-valued functions, scalar-valued functions (composable or non-composable), aggregate functions, built-in functions, and niladic function.</Description>
     <AssemblyName>EntityFramework.Functions</AssemblyName>
     <RootNamespace>EntityFramework.Functions</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/Dixin/EntityFramework.Functions</PackageProjectUrl>
+    <Copyright>Dixin Yan https://weblogs.asp.net/dixin</Copyright>
+    <PackageTags>EF Database Data O/RM ADO.NET EntityFramework Entity Framework CodeFirst Code First Functions StoredProcedures Stored Procedures table-valued tablevalued scalar-valued scalarvalued composable non-composable noncomposable aggregate built-in niladic</PackageTags>
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
+    <FileVersion>1.5.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
