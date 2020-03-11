@@ -33,17 +33,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "EntityFramework.Functions.Nuget", "EntityFramework.Functions.Nuget\EntityFramework.Functions.Nuget.nuproj", "{4C1EA2B7-77E9-4703-904F-643D11C17AFE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Tests.Library", "EntityFramework.Functions.Tests.Library\EntityFramework.Functions.Tests.Library.csproj", "{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Net47", "EntityFramework.Functions.Net47\EntityFramework.Functions.Net47.csproj", "{C9FE5455-28E0-4B20-B57E-06C1A6914631}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.NetStandard", "EntityFramework.Functions.NetStandard\EntityFramework.Functions.NetStandard.csproj", "{54076628-2329-4951-A4C6-FC6EA6611327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFramework.Functions.NetStandard", "EntityFramework.Functions.NetStandard\EntityFramework.Functions.NetStandard.csproj", "{54076628-2329-4951-A4C6-FC6EA6611327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Tests.Library.NetStandard", "EntityFramework.Functions.Tests.Library.NetStandard\EntityFramework.Functions.Tests.Library.NetStandard.csproj", "{EF4B3DB1-64FA-4435-B926-760F1EA93864}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFramework.Functions.Tests.Library.NetStandard", "EntityFramework.Functions.Tests.Library.NetStandard\EntityFramework.Functions.Tests.Library.NetStandard.csproj", "{EF4B3DB1-64FA-4435-B926-760F1EA93864}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Tests.NetStandard", "EntityFramework.Functions.Tests.NetStandard\EntityFramework.Functions.Tests.NetStandard.csproj", "{C9A163EA-1BB5-4784-93F4-326BBA3F718E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFramework.Functions.Tests.NetStandard", "EntityFramework.Functions.Tests.NetStandard\EntityFramework.Functions.Tests.NetStandard.csproj", "{C9A163EA-1BB5-4784-93F4-326BBA3F718E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.Functions.Net48", "EntityFramework.Functions.Net48\EntityFramework.Functions.Net48.csproj", "{67C1EDBE-21D0-4AB7-83F9-A51F7128ACFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +67,6 @@ Global
 		{A8813069-8F37-4D70-886B-DEA7D846CBDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8813069-8F37-4D70-886B-DEA7D846CBDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8813069-8F37-4D70-886B-DEA7D846CBDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C1EA2B7-77E9-4703-904F-643D11C17AFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C1EA2B7-77E9-4703-904F-643D11C17AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C1EA2B7-77E9-4703-904F-643D11C17AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C1EA2B7-77E9-4703-904F-643D11C17AFE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27AFFFB0-BC81-40EA-9D93-55523E1AFF06}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,6 +87,10 @@ Global
 		{C9A163EA-1BB5-4784-93F4-326BBA3F718E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9A163EA-1BB5-4784-93F4-326BBA3F718E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9A163EA-1BB5-4784-93F4-326BBA3F718E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C1EDBE-21D0-4AB7-83F9-A51F7128ACFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C1EDBE-21D0-4AB7-83F9-A51F7128ACFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C1EDBE-21D0-4AB7-83F9-A51F7128ACFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C1EDBE-21D0-4AB7-83F9-A51F7128ACFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

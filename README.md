@@ -29,8 +29,12 @@
     <li>Niladic functions</li>
     <li>Model defined functions</li>
 </ul>
-<p>EntityFramework.Functions library works on .NET 4.0, .NET 4.5, .NET 4.6, with <a href="https://msdn.microsoft.com/en-us/data/jj574253.aspx" target="_blank">Entity Framework 6.1.0 and later</a>. Entity Framework is the only dependency of this library.</p>
+<p>EntityFramework.Functions library works on .NET Standard with Entity Framework 6.4.0. It also works on .NET 4.0, .NET 4.5, .NET 4.6, .NET 4.7, .NET 4.8 with <a href="https://msdn.microsoft.com/en-us/data/jj574253.aspx" target="_blank">Entity Framework 6.1.0 and later</a>. Entity Framework is the only dependency of this library.</p>
 <p>It can be installed through <a href="https://www.nuget.org/packages/EntityFramework.Functions" target="_blank">Nuget</a>:</p>
+<blockquote>
+    <p>dotnet add package EntityFramework.Functions</p>
+</blockquote>
+<p>Or:</p>
 <blockquote>
     <p>Install-Package EntityFramework.Functions -DependencyVersion Highest</p>
 </blockquote>
