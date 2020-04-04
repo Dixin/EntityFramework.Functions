@@ -28,7 +28,7 @@ For more information, see:
 - Document (APIs and examples): https://weblogs.asp.net/Dixin/EntityFramework.Functions
 - Source code: https://github.com/Dixin/EntityFramework.Functions
 - Nuget package: https://www.nuget.org/packages/EntityFramework.Functions</description>
-    <summary>EntityFramework.Functions library implements Entity Framework code first support for stored procedures, table-valued functions, scalar-valued functions (composable or non-composable), aggregate functions, built-in functions, and niladic function.</summary>
+    <summary>Enable EF (.NET Standard & .NET Framework) support for stored procedures, table-valued functions, scalar-valued functions (composable or non-composable), aggregate functions, built-in functions, and niladic function.</summary>
     <copyright>Dixin Yan https://weblogs.asp.net/dixin</copyright>
     <tags>EF Database Data O/RM ADO.NET EntityFramework Entity Framework CodeFirst Code First Functions StoredProcedures Stored Procedures table-valued tablevalued scalar-valued scalarvalued composable non-composable noncomposable aggregate built-in niladic</tags>
     <dependencies>
