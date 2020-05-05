@@ -560,16 +560,37 @@ namespace EntityFramework.Functions
                 .ToArray();
         }
 
-        private static IList<FunctionParameter> GetModelParametersForModelDefinedFunction(
-            this DbModel model, MethodInfo methodInfo)
+        private static IList<FunctionParameter> GetModelParametersForModelDefinedFunction(this DbModel model,
+                                                                                          MethodInfo methodInfo)
         {
             ParameterInfo[] parameters = methodInfo.GetParameters().ToArray();
+            /*
             return parameters
                 .Select((parameterInfo) => FunctionParameter.Create(
-                    parameterInfo.GetCustomAttribute<ParameterAttribute>()?.Name ?? parameterInfo.Name,
-                    model.GetModelStructualType(parameterInfo.ParameterType, methodInfo),
-                    ParameterMode.In))
+                            parameterInfo.GetCustomAttribute<ParameterAttribute>()?.Name ?? parameterInfo.Name,
+                            model.GetModelStructualType(parameterInfo.ParameterType, methodInfo),
+                            ParameterMode.In))
                 .ToArray();
+                */
+            var result = parameters.Select((parameterInfo) =>
+                                           {
+                                               EdmType type;
+                                               try
+                                               {
+                                                   type = model.GetModelPrimitiveType(parameterInfo.ParameterType, methodInfo);
+                                               }
+                                               catch (NotSupportedException)
+                                               {
+                                                   type = model.GetModelStructualType(parameterInfo.ParameterType, methodInfo);
+                                               }
+
+                                               return FunctionParameter.Create(parameterInfo.GetCustomAttribute<ParameterAttribute>()?.Name
+                                                                               ?? parameterInfo.Name,
+                                                                               type,
+                                                                               ParameterMode.In);
+                                           })
+                                   .ToList();
+            return result;
         }
 
         private static IList<FunctionParameter> GetModelReturnParameters(
